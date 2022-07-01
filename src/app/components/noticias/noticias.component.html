@@ -1,0 +1,94 @@
+<section class="noticias">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Prensa</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-md-8 col-12 justify-content-center">
+      <!--Timeline de las noticias-->
+      <section
+        id="timeline"
+        class="timeline-center timeline-wrapper"
+        *ngIf="!loading"
+      >
+        <ul class="timeline">
+          <li class="timeline-line"></li>
+          <li class="timeline-group"></li>
+        </ul>
+        <ul class="timeline">
+          <li class="timeline-line"></li>
+
+          <li
+            class="timeline-item"
+            *ngFor="
+              let noticia of noticias | reverseArray;
+              let impar = odd;
+              let par = even
+            "
+            [ngClass]="{ 'mt-5': impar }"
+          >
+            <div class="timeline-badge">
+              <a
+                mat-mini-fab
+                color="primary"
+                class="edit-button"
+                matTooltipPosition="above"
+                matTooltip="{{ noticia.titulo }}, {{
+                  noticia.fechaRegistro | date: 'short'
+                }}"
+                [routerLink]="['/noticias/noticia/', noticia.idNoticia]"
+              >
+                <mat-icon>remove_red_eye</mat-icon>
+              </a>
+            </div>
+            <div
+              class="timeline-card card border-grey border-lighten-2 cursor-pointer"
+              [routerLink]="['/noticias/noticia', noticia.idNoticia]"
+            >
+              <div class="card-header">
+                <h4 class="card-title mb-0">
+                  <a>{{ noticia.titulo }}</a>
+                </h4>
+                <div class="card-subtitle text-muted mt-0">
+                  <span class="font-small-3">{{
+                    noticia.fechaRegistro | date: "fullDate"
+                  }}</span>
+                </div>
+              </div>
+              <div class="card-content">
+                <img
+                  class="img-fluid ml-3 img-timeline"
+                  src="{{ noticia.imagen }}"
+                  alt="Timeline image"
+                />
+                <div class="card-content">
+                  <div class="card-body">
+                    <p class="card-text">{{ noticia.resumen }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <!--Timeline de las noticias-->
+
+      <!--Div a mostrar cuando estén cargando los datos-->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+
+      <!--Div a mostrar cuando no haya datos-->
+      <div
+        class="alert alert-warning text-center"
+        *ngIf="!loading && noticias.length === 0"
+      >
+        <p><mat-icon class="icon-material">info</mat-icon></p>
+        <h4 class="alert-heading">No hay datos para mostrar</h4>
+      </div>
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

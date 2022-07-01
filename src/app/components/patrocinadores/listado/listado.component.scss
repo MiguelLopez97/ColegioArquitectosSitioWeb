@@ -1,0 +1,82 @@
+$color-blue-king: #0066cc;
+$fontAvenir: Avenir Lt Std-Book !important;
+
+* {
+  font-family: $fontAvenir;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+}
+
+.mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.title {
+  font-family: $fontAvenir;
+  color: $color-blue-king;
+  font-size: 400% !important;
+  margin-top: 200px;
+  font-weight: 800;
+}
+
+.btn-blue-king {
+  color: $color-blue-king;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+table {
+  width: 100%;
+}
+
+.patrocinador-container {
+  width: 15rem;
+}
+
+.img-container {
+  height: 150px;
+  width: 150px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.img-container > img {
+  height: 100%;
+  width: 100%;
+  margin: 0 !important;
+  object-fit: cover;
+}
+
+// Media Queries
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .title {
+    font-size: 600% !important;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .title {
+    font-size: 800% !important;
+  }
+}

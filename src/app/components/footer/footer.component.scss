@@ -1,0 +1,68 @@
+$color-blue-king: #0066cc;
+$fontAvenir: Avenir LT Std-Book !important;
+
+footer {
+  background-color: $color-blue-king;
+  font-family: $fontAvenir;
+  // height: 41vh;
+}
+
+.list-unstyled > li > a {
+  font-style: normal;
+  color: white;
+}
+
+.list-unstyled > li:hover > a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.text-white > a {
+  color: white;
+}
+
+.text-white > a:hover {
+  text-decoration: none;
+}
+
+.equalHW {
+  flex: 1;
+}
+
+.logos {
+  height: 2.5rem;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  footer {
+    // height: 30vh;
+  }
+
+  .logos {
+    height: 3rem;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  footer {
+    // height: 25vh;
+  }
+
+  .logos {
+    height: 4rem;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}

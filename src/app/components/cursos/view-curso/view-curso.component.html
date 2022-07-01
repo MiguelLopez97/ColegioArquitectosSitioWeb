@@ -1,0 +1,131 @@
+<section class="consejo-directivo mb-5">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Cursos</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <button mat-mini-fab color="primary" aria-label="Go Back" [routerLink]="['/cursos']">
+        <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+      </button>
+      <!-- Contenido Evento starts -->
+
+      <div class="row">
+        <div class="col">
+          <!-- <div class="d-flex justify-content-end">
+            <div class="btn-share-container mr-3">
+              <button mat-fab class="btn-share-twitter" (click)="shareResource('t')">
+                <span class="mat-btn-wrapper">
+                  <fa-icon [icon]="icons.twitter" class="btn-share-icon"></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-twt-label text-center">
+                <b>Compartir en Twitter</b>
+              </p>
+            </div>
+            <div class="btn-share-container mr-3">
+              <button mat-fab class="btn-share-facebook" (click)="shareResource('f')">
+                <span class="mat-btn-wrapper">
+                  <fa-icon [icon]="icons.facebook" class="btn-share-icon"></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-fb-label text-center">
+                <b>Compartir en Facebook</b>
+              </p>
+            </div>
+            <div class="btn-share-container">
+              <button mat-fab class="btn-share-whatsapp" (click)="shareResource('w')">
+                <span class="mat-btn-wrapper">
+                  <fa-icon [icon]="icons.whatsapp" class="btn-share-icon"></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-whp-label text-center">
+                <b>Compartir en Whatsapp</b>
+              </p>
+            </div>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!loading">
+        <div class="col summary">
+          <h1 class="text-uppercase mb-0">{{curso.descripcion}}</h1>
+          <h2 class="mb-5">Sede: {{curso.sede}}</h2>
+
+          <div class="row">
+            <div class="col-12 col-md-4 offset-md-2 mt-3 mt-md-0 brdr-right">
+              <h2>Instructores</h2>
+
+              <table class="table">
+                <tr>
+                  <th scope="col">Instructor</th>
+                  <td>
+                    {{curso.instructor1.tratamiento}} {{curso.instructor1.nombre}} {{curso.instructor1.aPaterno}} {{curso.instructor1.aMaterno}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-12 col-md-4 mt-3 mt-md-0">
+              <h2>Fechas y Horarios</h2>
+              <table class="table">
+                <tr>
+                  <th scope="col">Horario</th>
+                  <td>
+                    De {{curso.horaInicio}} a {{curso.horaFin}}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="col">Fecha de Inicio</th>
+                  <td>
+                    {{curso.fechaInicio | date: "longDate"}}
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="col">Fecha de Fin</th>
+                  <td>
+                    {{curso.fechaFin | date: "longDate"}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <div class="d-flex justify-content-center mb-2">
+                <button class="btn-register btn-blue-cat" (click)="validateSession(dialogTemplate)" mat-raised-button>
+                  Registrarme al curso
+                </button>
+
+                <ng-template #dialogTemplate>
+                  <h4 class="text-center">Para continuar el registro es necesario iniciar sesión (colegiados) o registrarse a través de un formulario (público en general)</h4>
+                  <div class="row">
+                    <div class="col-12 d-flex justify-content-center my-4">
+                      <button mat-raised-button class="btn-blue-cat" (click)="goToLogin()">
+                        Iniciar sesión
+                      </button>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center my-4">
+                      <button mat-raised-button class="btn-gray-cat" (click)="goToRegistroCurso()">
+                        No tengo cuenta y deseo registrarme al curso
+                      </button>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!-- Contenido Evento starts -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+.gmap_canvas > iframe {
+  height: 500px;
+}
+
+// Media Queries
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .gmap_canvas > iframe {
+    width: 300px;
+    height: 700px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .gmap_canvas > iframe {
+    width: 450px;
+    height: 700px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .gmap_canvas > iframe {
+    width: 550px;
+    height: 700px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .gmap_canvas > iframe {
+    width: 750px;
+    height: 700px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .gmap_canvas > iframe {
+    width: 1000px;
+    height: 700px;
+  }
+}

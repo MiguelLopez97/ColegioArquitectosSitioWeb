@@ -1,0 +1,186 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+    <mat-card class="rounded-0 border">
+      <mat-card-title>
+        <button
+          mat-mini-fab
+          color="primary"
+          class="mt-n3 mb-3"
+          [routerLink]="['/cotizaciones']"
+          matTooltip="Regresar"
+          matTooltipPosition="right"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2 class="color-blue-cat">{{ cotizacion.obra }}</h2>
+      </mat-card-title>
+
+      <div class="row">
+        <div class="col-6 col-md-6" *ngIf="!loading">
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Uso de Obra</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.usoDeObra }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                Factor de Calidad
+              </dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.factorCalidad }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Superficie</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.superficie }} (m²)
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                Salario Mínimo Vigente
+              </dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.smv | currency: "MXN" }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Valor Factor</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.valorFactor }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Arancel Total</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.arancelTotal | currency: "MXN" }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Folio</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.folio ? cotizacion.folio : "N/A" }}
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-6" *ngIf="!loading">
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Propietario</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.propietario }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Ubicación</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.ubicacion }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                Fecha de Creación
+              </dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.fechaCreacion | date: "medium" }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                Fecha de Aprobación
+              </dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.fechaAprobacion | date: "medium" }}
+              </dd>
+            </dl>
+          </div>
+
+          <div class="ml-1 mt-2 mat-typography">
+            <dl class="row">
+              <dt class="col-sm-4 col-md-4 col-lg-4 col-xl-3">Estatus</dt>
+              <dd class="col-sm-8 col-md-8 col-lg-8 col-xl-9">
+                {{ cotizacion.estatus }}
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <h3>Detalles</h3>
+
+          <mat-accordion class="acc-headers-align" multi>
+            <mat-expansion-panel *ngFor="let d of cotizacion.detalle">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ d.corresponsal }}</mat-panel-title>
+                <!-- <mat-panel-description>
+                  Type your name and age
+                </mat-panel-description> -->
+              </mat-expansion-panel-header>
+
+              <strong>Porcentaje:</strong>
+              {{ d.porcentaje }}%<br />
+              <strong>Monto de Arancel:</strong>
+              {{ d.arancel | currency: "MXN" }}
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!-- <hr />
+      <div class="row">
+        <div class="col-12 text-right">
+          <button
+            *ngIf="cotizacion.idEstatus === 1"
+            mat-raised-button
+            class="btn-blue-cat mr-2"
+            (click)="updateEstatus()"
+          >
+            Solicitar aprobación
+          </button>
+          <button
+            *ngIf="cotizacion.idEstatus === 3"
+            mat-raised-button
+            class="btn-blue-cat mr-2"
+            [routerLink]="['/pago-online']"
+          >
+            Ir a pagar
+          </button>
+        </div>
+      </div> -->
+    </mat-card>
+  </div>
+</div>

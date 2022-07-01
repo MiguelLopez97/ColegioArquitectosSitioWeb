@@ -1,0 +1,161 @@
+<section class="consejo-directivo mb-5">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Agenda</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Go Back"
+        [routerLink]="['/agenda']"
+      >
+        <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+      </button>
+      <!-- Contenido Evento starts -->
+
+      <div class="row">
+        <div class="col">
+          <div class="d-flex justify-content-end">
+            <div class="btn-share-container mr-3">
+              <button
+                mat-fab
+                class="btn-share-twitter"
+                (click)="shareResource('t')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.twitter"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-twt-label text-center">
+                <b>Compartir en Twitter</b>
+              </p>
+            </div>
+            <div class="btn-share-container mr-3">
+              <button
+                mat-fab
+                class="btn-share-facebook"
+                (click)="shareResource('f')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.facebook"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-fb-label text-center">
+                <b>Compartir en Facebook</b>
+              </p>
+            </div>
+            <div class="btn-share-container">
+              <button
+                mat-fab
+                class="btn-share-whatsapp"
+                (click)="shareResource('w')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.whatsapp"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-whp-label text-center">
+                <b>Compartir en Whatsapp</b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!loading">
+        <div class="col summary">
+          <h1 class="text-uppercase mb-0">{{ evento.descripcion }}</h1>
+          <h2 class="mb-5">Organizador: {{ evento.organizador }}</h2>
+
+          <div class="row">
+            <div class="col-12 col-md-4 brdr-right">
+              <h2>Información de Contacto</h2>
+              <p class="text mb-0">
+                <strong>Contacto:</strong> {{ evento.contacto }}
+              </p>
+              <p class="text mb-0">
+                <strong>Teléfono:</strong> {{ evento.telefono }}
+              </p>
+              <p class="text mb-0">
+                <strong>Correo Electrónico:</strong> {{ evento.correo }}
+              </p>
+            </div>
+            <div class="col-12 col-md-4 mt-3 mt-md-0 brdr-right">
+              <h2>Costos</h2>
+              <p class="text mb-0">
+                <strong>Para Socio:</strong>
+                {{ evento.costoSocio | currency: "MXN" }}
+              </p>
+              <p class="text mb-0">
+                <strong>Para Estudiante:</strong>
+                {{ evento.costoEstudiante | currency: "MXN" }}
+              </p>
+              <p class="text mb-0">
+                <strong>Para Público General:</strong>
+                {{ evento.costoPublico | currency: "MXN" }}
+              </p>
+            </div>
+            <div class="col-12 col-md-4 mt-3 mt-md-0">
+              <h2>Fechas y Horarios</h2>
+              <p class="text mb-0">
+                <strong>Horario:</strong> {{ evento.horario }}
+              </p>
+              <p class="text mb-0">
+                <strong>Fecha de Inicio:</strong>
+                {{ evento.fechaInicio | date: "longDate" }}
+              </p>
+              <p class="text mb-0">
+                <strong>Fecha de Fin:</strong>
+                {{ evento.fechaFin | date: "longDate" }}
+              </p>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col-12">
+              <div class="flyer">
+                <div class="d-flex justify-content-center mb-2">
+                  <a
+                    href="{{ evento.flyer }}"
+                    data-fancybox="gallery"
+                    class="flyer_link"
+                    *ngIf="evento.flyer.length >= 1"
+                  >
+                    <img
+                      src="{{ evento.flyer }}"
+                      class="img-fluid img-thumbnail img-initial"
+                    />
+                  </a>
+                  <img
+                    src="assets/img/noFoto.jpg"
+                    class="img-fluid img-thumbnail img-initial"
+                    *ngIf="evento.flyer.length == 0"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!-- Contenido Evento starts -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

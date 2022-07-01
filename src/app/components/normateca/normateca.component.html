@@ -1,0 +1,27 @@
+<section class="normateca mb-5">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Normateca</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <mat-card
+        class="d-flex justify-content-between align-items-center mb-3"
+        *ngFor="let normateca of normatecas"
+      >
+        {{ normateca.titulo }}
+        <a
+          href="{{ normateca.archivo }}"
+          target="_blank"
+          mat-mini-fab
+          color="primary"
+          matTooltip="Descargar"
+          matTooltipPosition="left"
+        >
+          <mat-icon>get_app</mat-icon>
+        </a>
+      </mat-card>
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

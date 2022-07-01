@@ -1,0 +1,244 @@
+<form
+  class="mt-3"
+  #convenioForm="ngForm"
+  (ngSubmit)="updateConvenio(convenioForm)"
+  *ngIf="!loading"
+>
+  <div class="form-body">
+    <div class="row">
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Entidad</mat-label>
+        <input
+          type="text"
+          matInput
+          name="entidad"
+          #entidad
+          [(ngModel)]="convenio.entidad"
+          placeholder="Nombre de la Institución"
+          required
+        />
+        <mat-error *ngIf="entidad.invalid && entidad.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Representante</mat-label>
+        <input
+          type="text"
+          matInput
+          name="representante"
+          #representante
+          [(ngModel)]="convenio.representante"
+          placeholder="Ej. Juan Pérez"
+          required
+        />
+        <mat-error *ngIf="representante.invalid && representante.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Contacto</mat-label>
+        <input
+          type="text"
+          matInput
+          name="contacto"
+          #contacto
+          [(ngModel)]="convenio.contacto"
+          placeholder="Ej. Luis Sánchez"
+          required
+        />
+        <mat-error *ngIf="contacto.invalid && contacto.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Correo</mat-label>
+        <input
+          type="mail"
+          matInput
+          name="correo"
+          #correo
+          [(ngModel)]="convenio.correoElectronico"
+          placeholder="example@example.com"
+          required
+        />
+        <mat-error *ngIf="correo.invalid && correo.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Teléfono</mat-label>
+        <input
+          type="tel"
+          matInput
+          name="telefono"
+          #telefono
+          [(ngModel)]="convenio.telefono"
+          placeholder="993174826"
+          maxlength="10"
+          (keypress)="validaNumeros($event)"
+          required
+        />
+        <mat-error *ngIf="telefono.invalid && telefono.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Página Web</mat-label>
+        <input
+          type="text"
+          matInput
+          name="paginaWeb"
+          #paginaWeb
+          [(ngModel)]="convenio.paginaWeb"
+          placeholder="Ej. Luis Sánchez"
+          required
+        />
+        <mat-error *ngIf="paginaWeb.invalid && paginaWeb.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-6 col-lg-3">
+        <mat-label>Facebook</mat-label>
+        <input
+          type="text"
+          matInput
+          name="facebook"
+          #facebook
+          [(ngModel)]="convenio.facebook"
+          placeholder="/ejemplo"
+        />
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-6 col-lg-3">
+        <mat-label>Twitter</mat-label>
+        <input
+          type="text"
+          matInput
+          name="twitter"
+          #twitter
+          [(ngModel)]="convenio.twitter"
+          placeholder="@ejemplo"
+        />
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-6 col-lg-3">
+        <mat-label>Instagram</mat-label>
+        <input
+          type="text"
+          matInput
+          name="instagram"
+          #instagram
+          [(ngModel)]="convenio.instagram"
+          placeholder="/ejemplo"
+        />
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-6 col-lg-3">
+        <mat-label>Whatsapp</mat-label>
+        <input
+          type="text"
+          matInput
+          name="whatsApp"
+          #whatsApp
+          [(ngModel)]="convenio.whatsApp"
+          placeholder="9931048493"
+          maxlength="10"
+          (keypress)="validaNumeros($event)"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Descripción</mat-label>
+        <textarea
+          type="textarea"
+          matTextareaAutosize
+          matAutosizeMinRows="3"
+          matAutosizeMaxRows="7"
+          matInput
+          name="descripcion"
+          #descripcion
+          [(ngModel)]="convenio.descripcion"
+          placeholder="Escriba aquí una pequeña descripción de la entidad..."
+          maxlength="1000"
+          required
+        ></textarea>
+        <mat-error *ngIf="descripcion.invalid && descripcion.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field class="col-12 col-md-6">
+        <mat-label>Beneficios</mat-label>
+        <textarea
+          type="textarea"
+          matTextareaAutosize
+          matAutosizeMinRows="3"
+          matAutosizeMaxRows="7"
+          matInput
+          name="beneficio"
+          #beneficio
+          [(ngModel)]="convenio.beneficio"
+          placeholder="Describa los beneficios del patrocinio..."
+          maxlength="1000"
+          required
+        ></textarea>
+        <mat-error *ngIf="beneficio.invalid && beneficio.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Fecha de vigencia</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerVigencia"
+          #vigencia="ngModel"
+          name="vigencia"
+          [(ngModel)]="convenio.vigencia"
+          required
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerVigencia"
+        ></mat-datepicker-toggle>
+        <mat-datepicker touchUi #pickerVigencia></mat-datepicker>
+        <mat-error *ngIf="vigencia.invalid && vigencia.touched"
+          >*Campo requerido</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <div class="text-right">
+        <button
+          mat-raised-button
+          type="submit"
+          class="btn-blue-cat mr-2"
+          [disabled]="convenioForm.invalid"
+        >
+          Guardar
+        </button>
+        <a
+          mat-raised-button
+          class="btn-gray-cat text-decoration-none"
+          (click)="closeDialog()"
+          >Cancelar</a
+        >
+        <!---<a mat-raised-button class="btn-gray-cat">Cancelar</a>--->
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="alert alert-light text-center" *ngIf="loading">
+  <p class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </p>
+</div>

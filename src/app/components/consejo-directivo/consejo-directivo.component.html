@@ -1,0 +1,78 @@
+<section class="consejo-directivo">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Consejo Directivo</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div
+      class="col-12 col-md-8 justify-content-center org-container"
+      *ngIf="consejo && !loading"
+    >
+      <!-- Contenido starts -->
+
+      <!-- d-flex flex-row cards justify-content-center -->
+      <div
+        class="row cards equal justify-content-center mb-5"
+        *ngFor="let nivel of niveles; let i = index"
+        [ngClass]="{ 'margin-bottom': i + 1 !== niveles.length }"
+      >
+        <div
+          class="mb-4"
+          [ngClass]="{
+            'col-12 col-md-4 col-lg-3': nivel.socios.length <= 4,
+            col: nivel.socios.length > 0
+          }"
+          *ngFor="let c of nivel.socios"
+        >
+          <mat-card class="example-card h-100">
+            <div
+              class="img-container my-2 mx-0"
+              [routerLink]="['/contratar-arquitecto/arquitecto', c.idSocio]"
+            >
+              <img
+                mat-card-image
+                [src]="c.avatarUri"
+                alt="{{ c.nombre }} {{ c.aPaterno }} {{ c.aMaterno }}"
+                class="text-center"
+              />
+            </div>
+            <!-- <mat-card-header class="text-center">
+              <mat-card-title
+                >{{ c.nombre }} {{ c.aPaterno }}
+                {{ c.aMaterno }}</mat-card-title
+              >
+            </mat-card-header> -->
+            <mat-card-content
+              class="text-center"
+              [routerLink]="['/contratar-arquitecto/arquitecto', c.idSocio]"
+            >
+              <h5 class="mb-0">
+                <strong
+                  >{{ c.nombre }} {{ c.aPaterno }} {{ c.aMaterno }}</strong
+                >
+              </h5>
+              <h5>
+                {{ c.puesto }}
+              </h5>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Contenido starts -->
+    </div>
+
+    <div
+      class="col-12 col-md-8 justify-content-center"
+      *ngIf="!consejo && loading"
+    >
+      <!--Div a mostrar cuando estén cargando los datos-->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

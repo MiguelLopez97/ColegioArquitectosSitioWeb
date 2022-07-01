@@ -1,0 +1,17 @@
+<div
+  [ngStyle]="{
+    'min-height': clientHeight + 'px',
+    'margin-bottom': isHome ? '-' + footerHeight + 'px' : '0px'
+  }"
+>
+  <app-navbar (propagarHeight)="getHeights($event, 1)"></app-navbar>
+
+  <app-redes-sociales></app-redes-sociales>
+  <app-logo-flotante></app-logo-flotante>
+
+  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+
+  <div [ngStyle]="{ height: isHome ? footerHeight - 5 + 'px' : '0px' }"></div>
+</div>
+
+<app-footer (propagarHeight)="getHeights($event, 2)"></app-footer>

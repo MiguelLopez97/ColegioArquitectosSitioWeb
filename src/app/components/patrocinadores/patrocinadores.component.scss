@@ -1,0 +1,140 @@
+$color-blue-king: #0066cc;
+$fontAvenir: Avenir Lt Std-Book !important;
+
+* {
+  font-family: $fontAvenir;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+}
+
+.mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.header {
+  margin: 0;
+  min-height: 25vh;
+  background-image: url("../../../assets/img/eric-rothermel-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.title {
+  font-family: $fontAvenir;
+  color: white;
+  font-size: 400% !important;
+  margin-top: 110px;
+  font-weight: 800;
+}
+
+.summary {
+  text-align: center;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.nosotros {
+  border-top: 4px dotted gray;
+}
+
+.mes {
+  border-bottom: 1px solid $color-blue-king;
+}
+
+.flyer_link {
+  width: 40%;
+  height: 80%;
+}
+
+.img-initial {
+  object-fit: contain;
+}
+
+.btn-blue-king {
+  color: $color-blue-king;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+.card {
+  height: 8rem;
+  overflow-y: hidden;
+  border-radius: 8%;
+  transition: transform 500ms, display 500ms;
+}
+
+.card > img {
+  height: 100%;
+  object-fit: contain;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  animation: flash 1s linear;
+  cursor: pointer;
+}
+
+// Cambiar el color de las flechas del carrucel
+.mat-focus-indicator.mat-icon-button.mat-button-base.mat-accent .ng-star-inserted {
+  background-color: $color-blue-king;
+  color: white;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  padding: 5px;
+}
+
+// Media Queries
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .flyer_link {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .title {
+    font-size: 600% !important;
+  }
+
+  .brdr-right {
+    border-right: 1px solid $color-blue-king;
+  }
+
+  .summary {
+    text-align: justify;
+  }
+
+  .flyer_link {
+    height: 100%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .title {
+    font-size: 800% !important;
+  }
+}

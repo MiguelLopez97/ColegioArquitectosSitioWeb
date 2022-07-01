@@ -1,0 +1,9 @@
+//Elimina los márgenes derecha e izquierda de la clase 'row' de Bootstrap
+.row { margin-left: inherit; margin-right: inherit; }
+
+h2 {
+    font-family: Avenir Lt Std-Book !important;
+}
+
+//Estilo para los iconos cuando se muestra un alert de Bootstrap 
+.icon-material { font-size: 80px; width: 80px !important; height: 80px !important; }

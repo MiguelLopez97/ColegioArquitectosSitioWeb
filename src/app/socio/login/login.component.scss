@@ -1,0 +1,67 @@
+.transparencia {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#login {
+    background-image: url('../../../assets/img/bg-login.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+      
+    .container-fluid {
+      background-color: rgba(0, 0, 0, 0.7);
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+    
+    .login-img {
+      padding: 0;
+      background: #f0f0f0;
+    }
+    
+    .login-btn {
+      .btn.btn-outline-primary {
+        &:hover {
+          a {
+            color: #fff;
+          }
+        }
+      }
+    }
+    
+    .recover-pass {
+      button.btn.btn-primary {
+        color: #fff !important;
+      }
+    }
+    
+    .forgot-password-option, .remember-me {
+      a.text-decoration-none, .custom-control-label {
+        font-size: 14px;
+      }
+    }
+  
+    .btn-sign-in {
+      background-color: #2054A1;
+      color: #FFFFFF;
+      width: 48%;
+    }
+  
+    .btn-sign-in:hover {
+      background-color: #112F5F;
+    }
+  
+    .btn-register {
+      background-color: #78797A;
+      color: #FFFFFF;
+      width: 48%;
+    }
+  
+    .btn-register:hover {
+      background-color: #444444;
+    }
+}
+    

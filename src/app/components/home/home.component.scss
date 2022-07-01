@@ -1,0 +1,20 @@
+$color-blue-king: #0066cc;
+
+.home {
+  margin: 0;
+  text-align: center;
+}
+
+.title {
+  font-size: 75px;
+}
+
+// Cambiar el color de las flechas del carrucel
+.mat-icon.notranslate.material-icons.mat-icon-no-color.ng-star-inserted {
+  background-color: $color-blue-king;
+  color: white;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  padding: 5px;
+}

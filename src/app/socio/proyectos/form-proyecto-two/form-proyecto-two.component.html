@@ -1,0 +1,109 @@
+<!---Div a mostrar cuando se da clic en 'Agregar proyecto'--->
+<div *ngIf="data.idProyecto == null">
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Sección deshabilitada</h4>
+    <p>Es necesario que primero rellenes los Datos Generales. 
+      Posteriormente, podrás capturar los Datos Opcionales del proyecto una vez ya registrado, dando clic al botón <mat-icon>create</mat-icon> de la tabla principal.</p>
+  </div>
+
+  <div class="row d-flex justify-content-end mt-1 mb-0">
+    <a mat-raised-button class="btn-gray-cat text-decoration-none" (click)="closeDialog()">Aceptar</a>
+  </div>
+</div>
+
+<!---Div a mostrar cuando se da clic en 'Editar proyecto'--->
+<div *ngIf="data.idProyecto != null">
+  <form #proyectoParteDosForm="ngForm" (ngSubmit)="saveProyecto(proyectoParteDosForm)">
+    <div class="form-body">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Datos opcionales</h4>
+        <p>Estos campos son opcionales y no son obligatorios. Sin embargo, ayudan a dar más información al proyecto.</p>
+      </div>
+  
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Curado</mat-label>
+          <input matInput name="curado" [(ngModel)]="proyecto.curado">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Fotografías</mat-label>
+          <input matInput name="fotografias" [(ngModel)]="proyecto.fotografias">
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Equipo de diseño</mat-label>
+          <input matInput name="equipoDisenio" [(ngModel)]="proyecto.equipoDeDisenio">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Proveedores</mat-label>
+          <input matInput name="proveedores" [(ngModel)]="proyecto.proveedores">
+        </mat-form-field>
+      </div>
+  
+      <div class="row">     
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Clientes</mat-label>
+          <input matInput name="clientes" [(ngModel)]="proyecto.clientes">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Ingeniería</mat-label>
+          <input matInput name="ingenieria" [(ngModel)]="proyecto.ingenieria">
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Paisajismo</mat-label>
+          <input matInput name="paisajismo" [(ngModel)]="proyecto.paisajismo">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Consultores</mat-label>
+          <input matInput name="consultores" [(ngModel)]="proyecto.consultores">
+        </mat-form-field>
+      </div>
+  
+      <div class="row">     
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Constructora</mat-label>
+          <input matInput name="constructora" [(ngModel)]="proyecto.constructora">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-6">
+          <mat-label>Colaboradores</mat-label>
+          <input matInput name="colaboradores" [(ngModel)]="proyecto.colaboradores">
+        </mat-form-field>
+      </div>
+  
+      <div class="row">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Ubicación</mat-label>
+          <input matInput name="ubicacion" [(ngModel)]="proyecto.ubicacion">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Ciudad</mat-label>
+          <input matInput name="ciudad" [(ngModel)]="proyecto.ciudad">
+        </mat-form-field>
+  
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>País</mat-label>
+          <input matInput name="pais" [(ngModel)]="proyecto.pais">
+        </mat-form-field>                    
+      </div>
+  
+      <div class="form-actions">
+        <div class="text-right">                        
+          <button mat-raised-button type="submit" class="btn-blue-cat mr-2">Guardar</button>
+          <a mat-raised-button class="btn-gray-cat text-decoration-none" (click)="closeDialog()">Cancelar</a>
+        </div>
+      </div>
+  
+    </div>
+  </form>
+</div>

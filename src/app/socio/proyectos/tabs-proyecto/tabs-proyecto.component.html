@@ -1,0 +1,29 @@
+<h2 mat-dialog-title class="card-title color-blue-cat">{{titulo}}</h2>
+
+<mat-dialog-content class="mat-typography">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>Datos generales</ng-template>
+      
+      <!---Formulario con datos generales del proyecto-->
+      <app-form-proyecto-one></app-form-proyecto-one>
+
+    </mat-tab>
+  
+    <mat-tab>
+      <ng-template mat-tab-label>Datos opcionales</ng-template>
+
+      <!---Formulario con datos opcionales del proyecto-->
+      <app-form-proyecto-two></app-form-proyecto-two>
+
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>Subir fotografías</ng-template>
+
+      <!---Formulario con datos opcionales del proyecto-->
+      <app-upload-fotos></app-upload-fotos>
+
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>

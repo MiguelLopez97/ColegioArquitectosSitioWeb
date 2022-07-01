@@ -1,0 +1,29 @@
+<h2 mat-dialog-title class="color-blue-cat">Eliminar fotografías</h2>
+
+<!--Div a mostrar cuando estén cargando los datos-->
+<div class="alert alert-light text-center" *ngIf="loading">
+  <p class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </p>
+</div>
+
+<mat-dialog-content class="mat-typography" *ngIf="!loading">
+  <p *ngIf="fotosProyecto.length > 0">Seleccione las fotografías a eliminar</p>
+  <p *ngIf="fotosProyecto.length == 0">No hay fotografías para eliminar</p>
+
+  <div class="row">
+    <div class="col-6 col-md-3" *ngFor="let foto of fotosProyecto">
+      <mat-checkbox (change)="changeCheckbox($event, foto.idFotografia)">
+        <img src="{{foto.foto}}" class="img-fluid img-thumbnail img-gallery" alt="">
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <p *ngIf="fotosProyecto.length > 0">Elementos seleccionados: {{fotosSeleccionadas}}</p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end mt-1 mb-0">
+  <button class="mr-2" mat-raised-button color="warn" (click)="deletePhoto()" [disabled]="fotosSeleccionadas == 0">Eliminar</button>
+  <a mat-raised-button class="btn-gray-cat text-decoration-none" (click)="closeDialog()">Cancelar</a>
+</mat-dialog-actions>

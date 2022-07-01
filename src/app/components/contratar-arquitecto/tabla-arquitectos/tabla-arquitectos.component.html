@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="col d-flex align-items-end justify-content-between flex-row">
+    <form class="form-inline my-2 my-lg-0" id="filter">
+      <mat-form-field class="search-bar">
+        <mat-label>Filtrar</mat-label>
+        <mat-select
+          matInput
+          placeholder="Filtrar"
+          [(value)]="filterSelected"
+          (valueChange)="changeFilter(filterSelected)"
+        >
+          <mat-option value="0">Todos</mat-option>
+          <mat-option value="1">Certificados</mat-option>
+          <mat-option value="2">D.R.O</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <form class="form-inline my-2 my-lg-0" id="search">
+      <mat-form-field class="search-bar">
+        <mat-label>Buscar arquitecto...</mat-label>
+        <input
+          matInput
+          type="text"
+          name="busqueda"
+          [(ngModel)]="value"
+          placeholder="Realiza una búsqueda"
+          (keyup.enter)="onEnter()"
+          (keydown.enter)="onEnter()"
+          (keydown.esc)="onEscEvent()"
+          (keyup)="onSearchKey($event)"
+        />
+        <button
+          mat-button
+          *ngIf="value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="onEscEvent()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
+<div class="container">
+  <div class="row cards equal" *ngIf="!loading">
+    <div
+      class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4"
+      *ngFor="let a of tempData"
+    >
+      <mat-card class="example-card h-100">
+        <div class="img-container my-2 mx-0">
+          <img
+            mat-card-image
+            [src]="a.avatarUri"
+            alt="{{ a.nombreCompleto }} {{ a.apellidoPat }} {{ a.apellidoMat }}"
+            [routerLink]="['/contratar-arquitecto/arquitecto', a.idSocio]"
+          />
+        </div>
+        <mat-card-header>
+          <mat-card-title class="text-left" id="title-{{ a.idSocio }}"
+            >{{ a.nombreCompleto }} {{ a.apellidoPat }}
+            {{ a.apellidoMat }}</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <p class="text-justify">
+            <strong># Colegiado</strong>: {{ a.codigo }}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            class="btn-blue-cat btn-block"
+            mat-button
+            [routerLink]="['/contratar-arquitecto/arquitecto/', a.idSocio]"
+          >
+            Ver Más...
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-light text-center" *ngIf="loading">
+  <h4 class="alert-heading">Cargando</h4>
+  <p class="d-flex-justify-content-center">
+    <mat-spinner diameter="50" mode="indeterminate"></mat-spinner>
+  </p>
+  <p class="mb-0">Espere por favor</p>
+</div>

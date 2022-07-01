@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/scss/vertical-timeline";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "~ngx-sharebuttons/themes/circles/circles-dark-theme.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@font-face {
+  font-family: "Avenir LT Std-Book";
+  src: url("./assets/fonts/AvenirLTStd-Book.otf");
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+}
+
+//Deshabilita el poder dar click en los títulos del MatStepper (Formulario Pago en Línea)
+.mat-step-header {
+  pointer-events: none !important;
+}
+
+//Estilo para los iconos de los alerts (Pagina no encontrada, No hay datos por mostrar, etc.)
+.icon-material { 
+    font-size: 90px; 
+    width: unset !important;
+    height: unset !important;
+}
+
+/*Estilos Generales [cat=(Colegio de Arquitectos Tabasqueños)]*/
+.btn-blue-cat {
+  background-color: #2054a1;
+  color: #ffffff;
+}
+
+.btn-blue-cat:hover {
+  background-color: #112f5f;
+  color: #ffffff;
+}
+
+.btn-gray-cat {
+  background-color: #78797a;
+  color: #ffffff;
+}
+
+.btn-gray-cat:hover {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.color-blue-cat {
+  color: #2054a1;
+}
+
+.color-gray-cat {
+  color: #78797a;
+}
+
+.bg-blue-cat {
+  background-color: #2054a1;
+}
+
+.bg-gray-cat {
+  background-color: #78797a;
+}
+/*End Estilos Generales*/
+
+/*Estilos para los alerts (mismos colores que Bootstrap)*/
+.alert-info {
+  color: #0c5460 !important;
+  background-color: #d1ecf1 !important;
+  border-color: #bee5eb !important;
+}
+
+.alert-danger {
+  color: #721c24 !important;
+  background-color: #f8d7da !important;
+  border-color: #f5c6cb !important;
+}
+
+.alert-warning {
+  color: #856404 !important;
+  background-color: #fff3cd !important;
+  border-color: #ffeeba !important;
+}
+/*End Estilos para los alerts (mismos colores que Bootstrap)*/
+
+.mark,
+mark {
+  background-color: #ffd600 !important;
+  color: black !important;
+  padding: 0;
+}
+
+//Tamaño de fuente para tooltip de Angular Material
+.mat-tooltip {
+  font-size: 13px !important;
+}

@@ -1,0 +1,89 @@
+<section class="view-noticia">
+  <div class="row my-3 my-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-md-8 col-12 justify-content-center">
+      <!-- Contenido Starts -->
+
+      <div class="row">
+        <div class="col">
+          <div class="d-flex justify-content-end">
+            <div class="btn-share-container mr-3">
+              <button
+                mat-fab
+                class="btn-share-twitter"
+                (click)="shareResource('t')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.twitter"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-twt-label text-center">
+                <b>Compartir en Twitter</b>
+              </p>
+            </div>
+            <div class="btn-share-container mr-3">
+              <button
+                mat-fab
+                class="btn-share-facebook"
+                (click)="shareResource('f')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.facebook"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-fb-label text-center">
+                <b>Compartir en Facebook</b>
+              </p>
+            </div>
+            <div class="btn-share-container">
+              <button
+                mat-fab
+                class="btn-share-whatsapp"
+                (click)="shareResource('w')"
+              >
+                <span class="mat-btn-wrapper">
+                  <fa-icon
+                    [icon]="icons.whatsapp"
+                    class="btn-share-icon"
+                  ></fa-icon>
+                </span>
+              </button>
+              <p class="btn-share-whp-label text-center">
+                <b>Compartir en Whatsapp</b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h1 class="mat-h1 mt-n2">{{ noticia.titulo }}</h1>
+        <p class="text-muted">{{ noticia.fechaRegistro | date: "fullDate" }}</p>
+
+        <img [src]="noticia.imagen" alt="Image noticia" width="300" />
+
+        <blockquote class="blockquote mt-3">
+          <p>{{ noticia.resumen }}</p>
+        </blockquote>
+        <hr />
+
+        <div [innerHTML]="noticia.cuerpo | safeHTML" *ngIf="!loading"></div>
+      </div>
+      <!-- Breadcrumb Ends -->
+
+      <!--Div a mostrar cuando estén cargando los datos-->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

@@ -1,0 +1,16 @@
+/* Drop Zone */
+.drop-zone { 
+	border: dashed 3px lightgray; 
+	opacity: 0.5; 
+	color: #666; 
+	text-align: center 
+}
+
+.file-over { 
+	border: dashed 3px dodgerblue; 
+}
+
+//Cambia el puntero a "no permitido" cuando se pasa el mouse sobre un input deshabilitado
+button[disabled] {
+    cursor: not-allowed;
+}

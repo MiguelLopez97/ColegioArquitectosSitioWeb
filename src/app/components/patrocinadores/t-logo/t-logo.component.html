@@ -1,0 +1,109 @@
+<!-- Div a mostrar cuando ya se cargo con anterioridad el logo del patrocinador -->
+<!-- <div *ngIf="hayLogo">
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Sección deshabilitada</h4>
+    <p>Ya se cargo el logo.</p>
+  </div>
+  <div class="row d-flex justify-content-end mt-1 mb-0">
+    <a
+      mat-raised-button
+      class="btn-gray-cat text-decoration-none"
+      (click)="closeDialog()"
+      >Aceptar</a
+    >
+  </div>
+</div> -->
+
+<!-- Div a mostrar cuando aún no se a cargado el logo del patrocinador -->
+<div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div
+        appNgDropFiles
+        [ngClass]="{ 'file-over': estaSobreElemento }"
+        [archivos]="archivos"
+        (mouseSobre)="estaSobreElemento = $event"
+        class="well drop-zone d-none d-md-block"
+      >
+        <h4>Arrastra tus imágenes del proyecto aquí (máximo 1 fotografía)</h4>
+        <img src="assets/img/drop-images.png" />
+      </div>
+
+      <p class="d-none d-md-block">o</p>
+
+      <a
+        mat-raised-button
+        class="text-decoration-none"
+        color="accent"
+        (click)="fileInput.click()"
+      >
+        <span>Selecciona tus archivos</span>
+        <input
+          class="form-control"
+          #fileInput
+          type="file"
+          multiple="multiple"
+          accept=".png, .jpg, .jpeg"
+          (change)="onChangeFiles($event)"
+          style="display: none"
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="bg-blue-cat">
+          <tr>
+            <td class="text-white">#</td>
+            <td class="text-white">Nombre archivo</td>
+            <td class="text-white">Tamaño</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let archivo of archivos; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td [ngClass]="{ 'text-green': archivo?.progreso >= 100 }">
+              {{ archivo?.fileName }}.{{ archivo?.fileExt }}
+            </td>
+            <td *ngIf="archivo?.fileSize <= 1000000">
+              {{ archivo?.fileSize / 1024 | number: ".2-2" }} KB
+            </td>
+            <td *ngIf="archivo?.fileSize >= 1000000">
+              {{ archivo?.fileSize / 1024 / 1024 | number: ".2-2" }} MB
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-end mt-1 mb-0 buttons-actions">
+    <button
+      type="button"
+      class="mr-1 btn-upload"
+      mat-raised-button
+      color="primary"
+      [disabled]="archivos.length == 0 || archivos.length > 1"
+      (click)="cargarImagenes()"
+    >
+      Cargar fotografías
+    </button>
+    <button
+      type="button"
+      class="mr-1"
+      mat-raised-button
+      color="warn"
+      (click)="limpiarArchivos()"
+    >
+      Limpiar
+    </button>
+    <a
+      mat-raised-button
+      class="btn-gray-cat text-decoration-none"
+      (click)="closeDialog()"
+      >Cancelar</a
+    >
+  </div>
+</div>

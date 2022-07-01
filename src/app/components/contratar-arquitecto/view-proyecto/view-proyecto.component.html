@@ -1,0 +1,375 @@
+<section class="view-afiliados mb-5">
+  <div class="row m-0 header justify-content-center text-center">
+    <h1 class="title">
+      {{ proyecto?.titulo }}
+    </h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8">
+      <!-- Ver Proyecto starts -->
+      <div class="botonera d-flex justify-content-between">
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Go Back"
+          [routerLink]="['../../../../arquitecto', currentRoute.params.idSocio]"
+        >
+          <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+        </button>
+        <button
+          mat-mini-fab
+          color="link"
+          aria-label="Editar"
+          [routerLink]="['/proyectos']"
+          *ngIf="currentRoute.params.idSocio === idSocioDesencriptado"
+        >
+          <mat-icon class="mat-icon">edit</mat-icon>
+        </button>
+      </div>
+
+      <div class="afiliado" *ngIf="proyecto">
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <div class="fotos">
+                  <!---Foto principal que solo se mostrará en dispositivos con resolución de pantalla mayor a 1200px--->
+                  <div class="d-none d-xl-flex justify-content-center mb-2">
+                    <a
+                      href="{{ proyecto?.fotos[0]?.foto }}"
+                      data-fancybox="gallery"
+                      *ngIf="proyecto?.fotos?.length >= 1"
+                    >
+                      <img
+                        src="{{ proyecto?.fotos[0]?.foto }}"
+                        class="img-fluid img-thumbnail img-initial"
+                      />
+                    </a>
+                    <img
+                      src="assets/img/noFoto.jpg"
+                      class="img-fluid img-thumbnail img-initial"
+                      *ngIf="proyecto?.fotos?.length == 0"
+                    />
+                  </div>
+
+                  <!---Foto principal que solo se mostrará en móvil y tablets-->
+                  <div class="d-flex d-xl-none justify-content-center mb-2">
+                    <a
+                      href="{{ proyecto?.fotos[0]?.foto }}"
+                      data-fancybox
+                      *ngIf="proyecto?.fotos?.length >= 1"
+                    >
+                      <img
+                        src="{{ proyecto?.fotos[0]?.foto }}"
+                        class="img-fluid img-thumbnail img-initial"
+                      />
+                    </a>
+                    <img
+                      src="assets/img/noFoto.jpg"
+                      class="img-fluid img-thumbnail img-initial"
+                      *ngIf="proyecto?.fotos?.length == 0"
+                    />
+                  </div>
+
+                  <!--Muestra las 5 fotos debajo de la primera foto sólo en dispositivos con resolución de pantalla mayor a 1200px-->
+                  <div
+                    class="
+                      d-none d-xl-flex
+                      justify-content-center
+                      w-100
+                      flex-wrap
+                      m-auto
+                      gallery-container
+                    "
+                  >
+                    <!--Muestra las 5 fotos debajo de la primer foto-->
+                    <a
+                      class="position-relative"
+                      *ngFor="let foto of primerasCincoFotos; let i = index"
+                      href="{{ foto?.foto }}"
+                      data-fancybox="gallery"
+                    >
+                      <img
+                        src="{{ foto?.foto }}"
+                        class="img-fluid img-thumbnail img-gallery"
+                        alt=""
+                      />
+                      <h2
+                        class="
+                          d-flex
+                          align-items-center
+                          justify-content-center
+                          numberFotosRestantes
+                        "
+                        *ngIf="i == 4 && ultimasFotos.length > 0"
+                      >
+                        +{{ ultimasFotos.length }}
+                      </h2>
+                    </a>
+
+                    <!--Agrega las demás fotos en la galería, estas no se muestran al principio, solo se ven en la galería-->
+                    <a
+                      class="d-none"
+                      *ngFor="let foto of ultimasFotos"
+                      href="{{ foto?.foto }}"
+                      data-fancybox="gallery"
+                    >
+                      <img
+                        src="{{ foto?.foto }}"
+                        class="img-fluid img-thumbnail img-gallery"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <mat-icon>camera_alt</mat-icon>
+                  <h3>Fotos por {{ proyecto.fotografias }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="d-flex justify-content-end">
+                  <div class="btn-share-container mr-3">
+                    <button
+                      mat-fab
+                      class="btn-share-twitter"
+                      (click)="shareResource('t')"
+                    >
+                      <span class="mat-btn-wrapper">
+                        <fa-icon
+                          [icon]="icons.twitter"
+                          class="btn-share-icon"
+                        ></fa-icon>
+                      </span>
+                    </button>
+                    <p class="btn-share-twt-label text-center">
+                      <b>Compartir en Twitter</b>
+                    </p>
+                  </div>
+                  <div class="btn-share-container mr-3">
+                    <button
+                      mat-fab
+                      class="btn-share-facebook"
+                      (click)="shareResource('f')"
+                    >
+                      <span class="mat-btn-wrapper">
+                        <fa-icon
+                          [icon]="icons.facebook"
+                          class="btn-share-icon"
+                        ></fa-icon>
+                      </span>
+                    </button>
+                    <p class="btn-share-fb-label text-center">
+                      <b>Compartir en Facebook</b>
+                    </p>
+                  </div>
+                  <div class="btn-share-container">
+                    <button
+                      mat-fab
+                      class="btn-share-whatsapp"
+                      (click)="shareResource('w')"
+                    >
+                      <span class="mat-btn-wrapper">
+                        <fa-icon
+                          [icon]="icons.whatsapp"
+                          class="btn-share-icon"
+                        ></fa-icon>
+                      </span>
+                    </button>
+                    <p class="btn-share-whp-label text-center">
+                      <b>Compartir en Whatsapp</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6 col-12">
+                <!---<h1 class="mb-0">{{ proyecto.titulo }}</h1>--->
+                <span class="badge badge-pill badge-secondary">{{
+                  proyecto.categoria
+                }}</span>
+                <h2>Arquitecto(a): {{ proyecto.arquitectos }}</h2>
+                <!-- <h2
+                  [innerText]="proyecto.descripcion"
+                  class="text-muted mb-0"
+                ></h2> -->
+                <h2
+                  class="text-justify"
+                  [innerHTML]="proyecto.descripcion"
+                ></h2>
+                <!---<span class="badge badge-pill badge-success">{{
+                  proyecto.categoria
+                }}</span>--->
+              </div>
+              <div class="col-md-6 col-12">
+                <!---Muestra los datos de Equipo en tablets y pantallas con mayor tamaño de resolución-->
+                <div class="d-none d-sm-block">
+                  <h2>Equipo</h2>
+
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">local_shipping</mat-icon>
+                    Proveedores:
+                    {{ proyecto.proveedores ? proyecto.proveedores : "N/A" }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">group</mat-icon> Clientes:
+                    {{ proyecto.clientes }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">engineering</mat-icon>
+                    Ingeniería: {{ proyecto.ingenieria }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">panorama</mat-icon>
+                    Paisajismo: {{ proyecto.paisajismo }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">reduce_capacity</mat-icon>
+                    Consultores: {{ proyecto.consultores }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">construction</mat-icon>
+                    Contructores: {{ proyecto.constructora }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">calendar_today</mat-icon>
+                    Año: {{ proyecto.anio }}
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">format_shapes</mat-icon>
+                    Área: {{ proyecto.area }} Mts2
+                  </div>
+                  <div class="row">
+                    <mat-icon style="font-size: 18px">pin_drop</mat-icon>
+                    Locación: {{ proyecto.ciudad }}, {{ proyecto.pais }}
+                  </div>
+
+                  <!---
+                    <p>
+                      Proveedores:
+                      {{ proyecto.proveedores ? proyecto.proveedores : "N/A"
+                      }}<br />Clientes: {{ proyecto.clientes }}<br />
+                      Ingeniería: {{ proyecto.ingenieria }}<br />Paisajismo:
+                      {{ proyecto.paisajismo }}<br />Consultores:
+                      {{ proyecto.consultores }}<br />Contructores:
+                      {{ proyecto.constructora }}
+                    </p>
+                  --->
+                </div>
+
+                <!---Muestra los datos de Equipo solo en dispositivos móviles-->
+                <div class="d-block d-sm-none">
+                  <p>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseExample"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      Más información
+                    </button>
+                  </p>
+                  <div class="collapse" id="collapseExample">
+                    <h2>Equipo</h2>
+
+                    <div class="row">
+                      <mat-icon style="font-size: 22px"
+                        >local_shipping</mat-icon
+                      >
+                      Proveedores:
+                      {{ proyecto.proveedores ? proyecto.proveedores : "N/A" }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">group</mat-icon>
+                      Clientes: {{ proyecto.clientes }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">engineering</mat-icon>
+                      Ingeniería: {{ proyecto.ingenieria }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">panorama</mat-icon>
+                      Paisajismo: {{ proyecto.paisajismo }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px"
+                        >reduce_capacity</mat-icon
+                      >
+                      Consultores: {{ proyecto.consultores }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">construction</mat-icon>
+                      Contructores: {{ proyecto.constructora }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px"
+                        >calendar_today</mat-icon
+                      >
+                      Año: {{ proyecto.anio }}
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">format_shapes</mat-icon>
+                      Área: {{ proyecto.area }} Mts2
+                    </div>
+                    <div class="row">
+                      <mat-icon style="font-size: 22px">pin_drop</mat-icon>
+                      Locación: {{ proyecto.ciudad }}, {{ proyecto.pais }}
+                    </div>
+
+                    <!---
+                    <p>
+                      Proveedores:
+                      {{ proyecto.proveedores ? proyecto.proveedores : "N/A"
+                      }}<br />Clientes: {{ proyecto.clientes }}<br />
+                      Ingeniería: {{ proyecto.ingenieria }}<br />Paisajismo:
+                      {{ proyecto.paisajismo }}<br />Consultores:
+                      {{ proyecto.consultores }}<br />Contructores:
+                      {{ proyecto.constructora }}
+                    </p>
+                    --->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Galería de imágenes sólo para modo móvil y tablets-->
+        <div class="row d-xl-none">
+          <div class="col-12">
+            <h2>Galería del proyecto</h2>
+          </div>
+          <div
+            class="col-4 col-md-3"
+            *ngFor="let foto of fotosRestantesParaMostrarMovil"
+          >
+            <a href="{{ foto?.foto }}" data-fancybox="gallery-mobile">
+              <img
+                [src]="foto?.foto"
+                class="img-fluid img-thumbnail img-gallery-mobile"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <h4 class="alert-heading">Cargando</h4>
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="50" mode="indeterminate"></mat-spinner>
+        </p>
+        <p class="mb-0">Espere por favor</p>
+      </div>
+
+      <!-- Ver Proyecto ends -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

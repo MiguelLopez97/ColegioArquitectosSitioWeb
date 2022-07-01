@@ -1,0 +1,30 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+    <mat-card class="rounded-0 border">
+      <mat-card-title>
+        <h2 class="color-blue-cat">Mis Cotizaciones</h2>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-card-content>
+          <mat-tab-group (selectedTabChange)="onChange($event)"  [(selectedIndex)]="indexTab">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">note_add</mat-icon>Nueva Cotización
+              </ng-template>
+              <app-form-cotizaciones (indexEmitido)="setTab($event)"></app-form-cotizaciones>
+            </mat-tab>
+
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon class="tab-icon">access_time</mat-icon>Historial
+              </ng-template>
+              <app-historial-cotizaciones
+                [reload]="reloadChild"
+              ></app-historial-cotizaciones>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

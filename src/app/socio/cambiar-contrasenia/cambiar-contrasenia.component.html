@@ -1,0 +1,24 @@
+<h2 mat-dialog-title class="color-blue-cat">Cambiar contraseña</h2>
+
+<form [formGroup]="changePassForm" (ngSubmit)="cambiarPassword()">
+  <mat-dialog-content class="mat-typography">
+    <div class="row">          
+      <mat-form-field class="col-12">
+        <mat-label>Nueva contraseña</mat-label>
+        <input type="password" matInput formControlName="nuevaPass1">
+        <mat-error *ngIf="pass1NoValido">*Campo requerido</mat-error>
+      </mat-form-field>
+    
+      <mat-form-field class="col-12">
+        <mat-label>Confirmar nueva contraseña</mat-label>
+        <input type="password" matInput formControlName="nuevaPass2">
+        <mat-error *ngIf="pass2NoCoincide">*Las contraseñas deben coincidir</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions class="d-flex justify-content-end mt-1 mb-0">
+    <button type="submit" class="mr-2" mat-raised-button color="primary">Guardar</button>
+    <a mat-raised-button class="btn-gray-cat text-decoration-none" mat-dialog-close>Cancelar</a>
+  </mat-dialog-actions>
+</form>

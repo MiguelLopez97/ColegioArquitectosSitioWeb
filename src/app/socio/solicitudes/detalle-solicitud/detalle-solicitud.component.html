@@ -1,0 +1,53 @@
+<h2 mat-dialog-title class="color-blue-cat">Detalles</h2>
+
+<div *ngIf="!loading">
+  <div mat-dialog-content class="mat-typography">
+    
+    <div class="row">
+      <div class="col-md-12">
+        <dt>Folio</dt>
+        <dd>{{solicitud.folio}}</dd>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <dt>Tipo de solicitud</dt>
+        <dd>{{solicitud.idTipoSolicitud}}</dd>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <dt>Fecha de solicitud</dt>
+        <dd>{{solicitud.fechaSolicitud | date: 'medium'}}</dd>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <dt>Estatus</dt>
+        <dd>{{solicitud.estatus}}</dd>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <dt>Fecha de atención</dt>
+        <dd [ngClass]="{'text-italic text-muted': solicitud.fechaAtencion == null}">{{solicitud.fechaAtencion == null ? "Pendiente por atender": solicitud.fechaAtencion | date: 'medium'}}</dd>
+      </div>
+    </div>    
+   
+  </div>
+  
+  <mat-dialog-actions class="d-flex justify-content-end mb-n2">
+    <button mat-raised-button class="btn-gray-cat" (click)="closeDialog()">Aceptar</button>
+  </mat-dialog-actions>
+</div>
+
+<!--Div a mostrar cuando estén cargando los datos-->
+<div class="alert alert-light text-center" *ngIf="loading">
+  <p class="d-flex justify-content-center">
+    <mat-spinner diameter="80"></mat-spinner>
+  </p>
+</div>

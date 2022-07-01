@@ -1,0 +1,13 @@
+//Elimina los márgenes derecha e izquierda de la clase 'row' de Bootstrap
+.row { margin-left: inherit; margin-right: inherit; }
+
+//Alineación en el icono de Material Design y los textos de 'Detalles del archivo'
+span {    
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.badge {
+    font-size: 90% !important;
+}

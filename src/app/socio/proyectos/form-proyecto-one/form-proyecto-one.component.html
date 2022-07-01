@@ -1,0 +1,118 @@
+<form #proyectoParteUnoForm="ngForm" (ngSubmit)="saveProyecto(proyectoParteUnoForm)" *ngIf="!loading">
+  <div class="form-body">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">¡Presuma sus proyectos!</h4>
+      <p>Rellene los campos que se muestran a continuación para crear un nuevo proyecto. Los datos proporcionados son necesarios ya que se mostrarán en la página principal</p>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-8">
+        <mat-label>Título del proyecto</mat-label>
+        <input matInput #titulo="ngModel" name="titulo" [(ngModel)]="proyecto.titulo" autofocus required>
+        <mat-error *ngIf="titulo.invalid && titulo.touched">*Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-12 col-md-4">
+        <mat-label>Categoría</mat-label>
+        <mat-select #categoria="ngModel" name="categoria" [(ngModel)]="proyecto.idCategoria" required>
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria.idCategoria">{{categoria.descripcion}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="categoria.invalid && categoria.touched">*Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-12">
+        <mat-label>Descripción</mat-label>
+        <quill-editor [style]="editorStyle" 
+                      name="descripcion" 
+                      #descripcion="ngModel"
+                      [(ngModel)]="proyecto.descripcion"
+                      placeholder="Incluya una descripción breve de su proyecto (4000 caracteres como máximo)"
+                      [minLength]="1"
+                      [maxLength]="4000"
+                      [required]="true">
+          <div quill-editor-toolbar>
+            <span class="ql-formats">
+              <button type="button" class="ql-bold"></button>
+              <button type="button" class="ql-italic"></button>
+              <button type="button" class="ql-underline"></button>
+              <button type="button" class="ql-strike"></button>
+            </span>
+          </div>
+        </quill-editor>
+        <small class="text-danger" *ngIf="descripcion.invalid && proyecto.descripcion?.length > 4000">*La descripción ha superado los 4000 caracteres permitidos</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-12">
+        <mat-label>Arquitectos</mat-label>
+        <input matInput #arquitectos="ngModel" name="arquitectos" [(ngModel)]="proyecto.arquitectos" placeholder="Incluya a los arquitectos que participaron en este proyecto" required>
+        <mat-error *ngIf="arquitectos.invalid && arquitectos.touched">*Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-12 col-md-2">
+        <mat-label>Año</mat-label>
+        <mat-select #anio="ngModel" name="anio" [(ngModel)]="proyecto.anio" required>
+          <mat-option *ngFor="let anio of anios" [value]="anio.anio">{{anio.anio}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="anio.invalid && anio.touched">*Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-12 col-md-2">
+        <mat-label>Área</mat-label>
+        <input matInput #area="ngModel" name="area" [(ngModel)]="proyecto.area" (keypress)="validaNumeros($event)" required>
+        <mat-error *ngIf="area.invalid && area.touched">*Campo requerido</mat-error>
+      </mat-form-field>
+
+      <!---<mat-form-field class="col-12 col-md-8">
+        <mat-label>Palabras clave</mat-label>
+        <input matInput #tags="ngModel" name="tags" [(ngModel)]="proyecto.tags" required>
+        <mat-error *ngIf="tags.invalid && tags.touched">*Campo requerido</mat-error>
+      </mat-form-field>--->
+
+      <mat-form-field class="col-12 col-md-12">
+        <mat-label>Palabras clave (separar con una coma o dando Enter)</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let item of tagsArray" [selectable]="selectable"
+                   [removable]="removable" (removed)="remove(item)">
+            {{item}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Agregar palabra clave"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      
+    </div>
+    
+    <div class="row">
+      <mat-checkbox class="col-12" name="showProyecto" [(ngModel)]="proyecto.mostrarEnNoticias">
+        Mostrar proyecto en sección de Noticias
+      </mat-checkbox>
+      <mat-checkbox class="col-12" name="terminos" [(ngModel)]="isCheckedTerminosCondiciones" *ngIf="data.idProyecto == null">
+        Aceptar términos y condiciones y privacidad
+      </mat-checkbox>
+    </div>
+  </div> 
+
+  <div class="form-actions">
+    <div class="text-right">                        
+      <button mat-raised-button type="submit" class="btn-blue-cat mr-2" [disabled]="isCheckedTerminosCondiciones == false && data.idProyecto == null">Guardar</button>
+      <a mat-raised-button class="btn-gray-cat text-decoration-none" (click)="closeDialog()">Cancelar</a>
+    </div>
+  </div>
+</form>
+
+<!--Div a mostrar cuando estén cargando los datos-->
+<div class="alert alert-light text-center" *ngIf="loading">
+  <p class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </p>
+</div>

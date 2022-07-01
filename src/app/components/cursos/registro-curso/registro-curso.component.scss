@@ -1,0 +1,9 @@
+h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+//Cambia el puntero a "no permitido" cuando se pasa el mouse sobre un input deshabilitado
+input[disabled], button[disabled] {
+  cursor: not-allowed;
+}

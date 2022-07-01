@@ -1,0 +1,138 @@
+<section class="contactoForm mt-5">
+  <form
+    [formGroup]="contactoForm"
+    (ngSubmit)="saveContacto(contactoForm.value)"
+  >
+    <div class="form-body">
+      <div class="row">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            formControlName="nombreCompleto"
+            placeholder="Nombre(s)"
+            required
+          />
+          <mat-error *ngIf="hasError('nombreCompleto', 'required')">
+            *Campo requerido
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Apellido Paterno</mat-label>
+          <input
+            matInput
+            formControlName="apellidoPat"
+            placeholder="Apellido Paterno"
+            required
+          />
+          <mat-error *ngIf="hasError('apellidoPat', 'required')">
+            *Campo requerido
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Apellido Materno</mat-label>
+          <input
+            matInput
+            formControlName="apellidoMat"
+            placeholder="Apellido Materno"
+            required
+          />
+          <mat-error *ngIf="hasError('apellidoMat', 'required')">
+            *Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Correo Electrónico</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="correoElectronico"
+            placeholder="Correo Electrónico"
+            required
+          />
+          <mat-error *ngIf="hasError('correoElectronico', 'required')">
+            *Campo requerido
+          </mat-error>
+          <mat-error *ngIf="hasError('correoElectronico', 'email')">
+            *No es un correo valido
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Teléfono Móvil</mat-label>
+          <input
+            matInput
+            type="tel"
+            formControlName="telefonoMovil"
+            placeholder="Teléfono Móvil"
+            (keypress)="validaNumeros($event)"
+            maxlength="10"
+            required
+          />
+          <mat-error *ngIf="hasError('telefonoMovil', 'required')">
+            *Campo requerido
+          </mat-error>
+          <mat-error *ngIf="hasError('telefonoMovil', 'minlength')">
+            *Se requieren 10 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Género</mat-label>
+          <mat-select
+            matInput
+            formControlName="genero"
+            placeholder="Género"
+            required
+          >
+            <mat-option value="H">Hombre</mat-option>
+            <mat-option value="M">Mujer</mat-option>
+            <mat-option value="O">Otro</mat-option>
+          </mat-select>
+          <mat-error *ngIf="hasError('genero', 'required')">
+            *Campo requerido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-actions">
+        <div class="text-right">
+          <button
+            mat-raised-button
+            type="submit"
+            class="btn-blue-cat"
+            [disabled]="!contactoForm.valid"
+          >
+            Enviar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<section class="mt-3" *ngIf="error">
+  <div
+    class="alert alert-danger alert-dismissible fade show mb-0 alert-text"
+    role="alert"
+  >
+    ERROR: Error al guardar tus datos.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</section>
+
+<section class="mt-3" *ngIf="success" #successAlert>
+  <div
+    class="alert alert-success alert-dismissible fade show mb-0 alert-text"
+    role="alert"
+  >
+    ¡Tus datos han sido enviados exitosamente! Gracias por decidir iniciar tu
+    proceso de afiliación. Serás contactado proximamente.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</section>

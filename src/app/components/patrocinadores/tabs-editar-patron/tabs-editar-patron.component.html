@@ -1,0 +1,26 @@
+<h2 mat-dialog-title class="card-title color-blue-cat">Editar perfil</h2>
+
+<mat-dialog-content class="mat-typography">
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>Datos generales</ng-template>
+      <!-- Formulario con datos generales del patrocinador -->
+      <app-t-datos-generales></app-t-datos-generales>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>Subir Logo</ng-template>
+      <!-- Subir logo -->
+      <app-t-logo></app-t-logo>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>Subir fotografías</ng-template>
+      <!-- Subir fotografías del patrocinador -->
+      <app-t-subir-fotos></app-t-subir-fotos>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>Editar fotografías</ng-template>
+      <!-- Editar fotografías del patrocinador -->
+      <app-t-editar-fotos></app-t-editar-fotos>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>

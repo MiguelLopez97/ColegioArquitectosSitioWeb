@@ -1,0 +1,283 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+
+    <mat-card class="rounded-0 border">
+      <mat-card-title>
+        <h2 class="color-blue-cat">Pago en Línea</h2>
+      </mat-card-title>
+      <mat-card-content>
+    
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+          <!---Paso 1 de 3-->
+          <mat-step [stepControl]="seleccionarConceptoForm">
+            <ng-template matStepLabel>Seleccione el concepto a pagar</ng-template>
+
+            <form [formGroup]="seleccionarConceptoForm">
+              <!---Formulario para cuando sean pagos normales (que no provengan de una ruta de Curso)-->
+              <div *ngIf="!loading && !isPagoCurso">
+                <mat-form-field class="col-12 col-md-6">
+                  <mat-label>Concepto</mat-label>
+                  <mat-select name="producto" formControlName="concepto"><!--- (change)="onSelectProducto($event.target.value)"-->
+                    <mat-option *ngFor="let producto of productos" value="{{producto.idProducto}}">
+                      {{producto.descripcion}} <span class="badge badge-pill badge-danger ml-2" *ngIf="producto.tipo == 'Arancel'">Pendiente por pagar</span>
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="conceptoNoValido">*Campo requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-md-6">
+                  <mat-label>Precio</mat-label>
+                  <mat-select formControlName="precio" [disabled]="conceptoNoValido">
+                    <mat-option *ngFor="let producto of productosTemp" [value]="producto.precioSocio" [ngClass]="{'d-none': producto.precioSocio == 0}">
+                      Precio a Socio | {{producto.precioSocio | currency:'MXN'}}
+                    </mat-option>
+                    <mat-option *ngFor="let producto of productosTemp" [value]="producto.precioEstudiante" [ngClass]="{'d-none': producto.precioEstudiante == 0}">
+                      Precio a Estudiante | {{producto.precioEstudiante | currency:'MXN'}}
+                    </mat-option>
+                    <mat-option *ngFor="let producto of productosTemp" [value]="producto.precioPublico" [ngClass]="{'d-none': producto.precioPublico == 0}">
+                      Precio al Público en General | {{producto.precioPublico | currency:'MXN'}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="precioNoValido">*Campo requerido</mat-error>
+                </mat-form-field>
+              </div>
+              <!---End Formulario para cuando sean pagos normales (que no provengan de una ruta de Curso)-->
+
+              <!--Datos a mostrar cuando el pago sea para un Curso-->
+              <div *ngIf="!loading && isPagoCurso">
+                <div class="alert alert-primary row">
+                  <div class="col-12 col-md-6 border-curso">
+                    <p>Curso</p>
+                    <h3 class="title-curso">{{productos[0]?.descripcion}}</h3>
+                  </div>
+                  <div class="col-12 col-md-6 mt-3 mt-md-0 border-curso" *ngIf="userTypeId != 5">
+                    <p>Precio</p>
+                    <h3 class="title-curso">{{productosTemp[0]?.precioSocio | currency:'MXN'}}</h3>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="userTypeId == 5">
+                  <h3>Seleccione el precio</h3>
+                  <div class="col-12">
+                    <mat-radio-group formControlName="precio">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label class="w-100 curso-pointer" for="mat-radio-2-input">
+                            <mat-card>
+                              <p>Precio a estudiante</p>                    
+                              <mat-radio-button [value]="productosTemp[0]?.precioEstudiante">
+                                <h2 class="mb-0">{{productosTemp[0]?.precioEstudiante | currency:'MXN'}}</h2>
+                              </mat-radio-button>
+                            </mat-card>
+                          </label>
+                        </div>
+        
+                        <div class="col-md-3">
+                          <label class="w-100 curso-pointer" for="mat-radio-3-input">
+                            <mat-card>
+                              <p>Precio al público en general</p>
+                              <mat-radio-button [value]="productosTemp[0]?.precioPublico">
+                                <h2 class="mb-0">{{productosTemp[0]?.precioPublico | currency:'MXN'}}</h2>
+                              </mat-radio-button>
+                            </mat-card>
+                          </label>
+                        </div>
+                      </div>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <hr>
+              </div>
+              <!--End Datos a mostrar cuando el pago sea para un Curso-->
+    
+              <div class="text-right">
+                <button class="btn-blue-cat" mat-raised-button matStepperNext [disabled]="!seleccionarConceptoForm.valid">Siguiente</button>
+              </div>
+            </form>
+
+          </mat-step>
+          <!---End Paso 1 de 3-->
+    
+          <!---Paso 2 de 3-->
+          <mat-step [stepControl]="infoPagoForm" label="Información de pago">
+            <form id="processCard" name="processCard" [formGroup]="infoPagoForm" autocomplete="off" (ngSubmit)="validatePago()">
+              <div class="row">
+                <mat-form-field class="col-12 col-md-5">
+                  <mat-label>Nombre del titular</mat-label>
+                  <input matInput formControlName="nombreTitular" data-openpay-card="holder_name">
+                </mat-form-field>
+    
+                <mat-form-field class="col-12 col-md-7">
+                  <mat-label>Número de tarjeta</mat-label>                  
+                  <input matInput formControlName="numeroTarjeta" type="tel" data-openpay-card="card_number" (keypress)="validaNumeros($event)" maxlength="16">
+                  <img matSuffix class="img-fluid logo-cards" src="assets/img/cards1.png" alt="">                                  
+                  <mat-error *ngIf="tarjetaNoValida">*Campo requerido</mat-error>
+                </mat-form-field>
+              </div>
+    
+              <div class="row">
+                <mat-form-field class="col-12 col-md-4">
+                  <mat-label>Mes</mat-label>
+                  <mat-select formControlName="mesExpiracion">
+                    <mat-option *ngFor="let mes of meses" [value]="mes.idMes">{{mes.mes}}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="mesExpiracionNoValido">*Campo requerido</mat-error>
+                  <input type="hidden" value="{{infoPagoForm.value?.mesExpiracion}}" data-openpay-card="expiration_month">
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-4">
+                  <mat-label>Año de expiración</mat-label>              
+                  <mat-select formControlName="anioExpiracion">
+                    <mat-option *ngFor="let anio of anios" [value]="anio.idAnio">{{anio.anio}}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="anioExpiracionNoValido">*Campo requerido</mat-error>
+                  <input type="hidden" value="{{infoPagoForm.value?.anioExpiracion}}" data-openpay-card="expiration_year">             
+                </mat-form-field>
+
+                <mat-form-field class="col-12 col-md-4">
+                  <mat-label>CVV</mat-label>
+                  <input matInput type="tel" [ngClass]="{'cvv-password': !viewCVV, 'cvv-normal': viewCVV}" formControlName="cvv" data-openpay-card="cvv2" (keypress)="validaNumeros($event)" maxlength="4">
+                  <mat-icon matSuffix 
+                    *ngIf="!viewCVV"
+                    color="primary"
+                    class="icon-cvv mr-2"
+                    (click)="viewCVV = true"
+                    matTooltipPosition="above"
+                    matTooltip="Ver CVV">
+                    visibility
+                  </mat-icon>
+                  <mat-icon matSuffix 
+                    *ngIf="viewCVV"
+                    color="primary"
+                    class="icon-cvv mr-2"
+                    (click)="viewCVV = false"
+                    matTooltipPosition="above"
+                    matTooltip="Ocultar CVV">
+                    visibility_off
+                  </mat-icon>
+                  <mat-icon matSuffix class="icon-cvv" color="accent" matTooltipPosition="above" matTooltip="El código de seguridad se encuentra al reverso de su tarjeta">help</mat-icon>
+                  <mat-error *ngIf="cvvNoValido">*Campo requerido</mat-error>
+                </mat-form-field>
+              </div>
+    
+              <div class="row">
+                <mat-form-field class="col-12 col-md-6">
+                  <mat-label>Calle</mat-label>
+                  <input matInput formControlName="calle" data-openpay-card-address="line1">
+                </mat-form-field>
+    
+                <mat-form-field class="col-12 col-md-2">
+                  <mat-label>Número</mat-label>
+                  <input matInput formControlName="numero" data-openpay-card-address="line2">
+                </mat-form-field>
+    
+                <mat-form-field class="col-12 col-md-4">
+                  <mat-label>Colonia</mat-label>
+                  <input matInput formControlName="colonia" data-openpay-card-address="line3">
+                </mat-form-field>
+              </div>
+    
+              <div class="row">
+                <mat-form-field class="col-12 col-md-3">
+                  <mat-label>Código Postal</mat-label>
+                  <input matInput formControlName="codigoPostal" data-openpay-card-address="postal_code">
+                </mat-form-field>
+    
+                <mat-form-field class="col-12 col-md-5">
+                  <mat-label>Ciudad</mat-label>
+                  <input matInput formControlName="ciudad" data-openpay-card-address="city">
+                </mat-form-field>
+    
+                <mat-form-field class="col-12 col-md-4">
+                  <mat-label>Estado</mat-label>
+                  <input matInput formControlName="estado" data-openpay-card-address="state">
+                </mat-form-field>
+                
+                <input type="text" class="d-none" data-openpay-card-address="country_code" value="MX">
+                <input type="hidden" class="d-none" name="token_id" id="token_id">
+    
+                <div class="row d-flex justify-content-end row-logos">
+                  <div class="col-6 col-md-4 text-right logo-openpay">
+                    <small>Transacciones realizadas vía: </small>
+                    <img src="assets/img/openpay.png" alt="" class="img-fluid">
+                  </div>
+                  <div class="col-6 col-md-8">
+                    <img src="assets/img/security.png" alt="" class="img-fluid">
+                    <small> Tus pagos se realizan de forma segura con encriptación de 256 bits</small>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <button class="btn-gray-cat mr-2" mat-raised-button matStepperPrevious>Regresar</button>
+                <button class="btn-blue-cat" mat-raised-button>Siguiente</button>
+              </div>
+    
+            </form>
+          </mat-step>
+          <!---End Paso 2 de 3-->
+          
+          <!---Paso 3 de 3-->
+          <mat-step>
+            <ng-template matStepLabel>Confirmar datos</ng-template>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <h2 class="mat-h2 color-blue-cat"><mat-icon>local_offer</mat-icon> <span class="aligned-with-icon">Detalle del pago</span></h2>
+                <table class="table table-borderless table-responsive-md mat-typography">
+                  <tr>
+                    <th>Concepto</th>
+                    <td>{{pago.producto}}</td>
+                  </tr>
+                  <tr>
+                    <th>Precio</th>
+                    <td>{{pago.amount | currency:'MXN'}}</td>
+                  </tr>
+                  <tr>
+                    <th>Nombre del socio</th>
+                    <td>{{socio.nombreCompleto}} {{socio.apellidoPat}} {{socio.apellidoMat}}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-12 col-md-6">
+                <h2 class="mat-h2 color-blue-cat"><mat-icon>credit_card</mat-icon> <span class="aligned-with-icon">Detalle de la tarjeta</span></h2>
+                <table class="table table-borderless table-responsive-md mat-typography">              
+                  <tr>
+                    <th>Número de tarjeta</th>
+                    <td>{{resultNumeroTarjeta}}</td>
+                  </tr>
+                  <tr>
+                    <th>Fecha de expiración</th>
+                    <td>{{resultMesExpiracion}}/{{resultAnioExpiracion}}</td>
+                  </tr>
+                  <tr>
+                    <th>Tipo de tarjeta</th>
+                    <td class="text-capitalize">{{resultMarca}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+            <div class="text-right">
+              <button class="btn-gray-cat mr-2" mat-raised-button matStepperPrevious>Regresar</button>
+              <button class="btn-blue-cat" mat-raised-button (click)="savePago()">Confirmar pago</button>
+            </div>
+          </mat-step>
+          <!---End Paso 3 de 3-->
+        </mat-horizontal-stepper>
+
+        <!---Términos y condiciones-->
+        <div class="alert alert-info mx-4 terms-conditions" *ngIf="!loading">
+          <app-terminos-condiciones></app-terminos-condiciones>
+        </div>
+        <!--End Términos y condiciones-->
+    
+        <!--Div a mostrar cuando estén cargando los datos-->
+        <div class="alert alert-light text-center" *ngIf="loading">
+          <p class="d-flex justify-content-center">
+            <mat-spinner></mat-spinner>
+          </p>
+        </div>
+        
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+
+    <mat-card class="rounded-0 border">
+      <mat-card-title>
+        <h2 class="color-blue-cat">Historial de Pagos</h2>
+      </mat-card-title>
+      <mat-card-content>
+    
+        <!--Input para filtrar datos-->
+        <div class="row">
+          <mat-form-field class="col-12 col-md-4">
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por Folio, Producto o Monto" #input>
+          </mat-form-field>
+        </div>
+        
+        <!---Tabla Historial Pago-->
+        <table mat-table [dataSource]="dataSource" matSort class="w-100 table-hover table-responsive-md">
+          <!--Columna Folio-->
+          <ng-container matColumnDef="folio">
+            <th class="bg-blue-cat text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Folio</th>
+            <td mat-cell *matCellDef="let element">{{element.folio}}</td>
+          </ng-container>
+        
+          <!--Columna Producto-->
+          <ng-container matColumnDef="producto">
+            <th class="bg-blue-cat text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+            <td mat-cell *matCellDef="let element">{{element.producto}}</td>
+          </ng-container>            
+
+          <!--Columna Monto-->
+          <ng-container matColumnDef="monto">
+            <th class="bg-blue-cat text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Monto</th>
+            <td mat-cell *matCellDef="let element">{{element.monto | currency:'MXN'}}</td>
+          </ng-container>
+
+          <!--Columna Fecha-->
+          <ng-container matColumnDef="fecha">
+            <th class="bg-blue-cat text-white" mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+            <td mat-cell *matCellDef="let element">{{element.fechaPago | date:'d MMMM y, h:mm a'}}</td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>         
+          
+        </table>
+        <!---End Tabla Historial Pago-->
+
+        <!--Div a mostrar cuando estén cargando los datos-->
+        <div class="alert alert-light text-center" *ngIf="loading">
+          <p class="d-flex justify-content-center">
+            <mat-spinner></mat-spinner>
+          </p>
+        </div>
+        
+        <!---Div a mostrar cuando no encuentre coincidencias--->
+        <div class="alert" role="alert" *ngIf="!loading && dataSource.filteredData.length === 0">
+          No se han encontrado resultados para: {{input.value}}
+        </div>
+
+        <!--Div a mostrar cuando no haya datos-->
+        <div class="alert alert-info text-center" *ngIf="!loading && dataSource.data.length === 0">
+          <p><mat-icon class="icon-material">info</mat-icon></p>
+          <h4 class="alert-heading">No hay datos para mostrar</h4>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<section class="consejo-directivo mb-5">
+  <!-- <div class="row m-0 header justify-content-center">
+    <h1 class="title">Patrocinadores</h1>
+  </div> -->
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Go Back"
+        [routerLink]="['/']"
+      >
+        <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+      </button>
+
+      <div class="row justify-content-center mt-4">
+        <div class="col-12">
+          <h1>
+            Patrocinadores del Foro Internacional de Arquitectura, XV Bienal de
+            Arquitectura Tabasqueña y la Asamblea Nacional de Jóvenes
+            Arquitectos de la FCARM
+          </h1>
+        </div>
+      </div>
+
+      <!-- Carucel de posters de eventos -->
+      <div class="row justify-content-center" *ngIf="!loading">
+        <div class="col-12 col-md-8">
+          <mat-carousel
+            timings="150ms ease-in"
+            [autoplay]="true"
+            interval="3000"
+            color="accent"
+            slides="numberImagesSlide"
+            [loop]="true"
+            [hideArrows]="false"
+            [hideIndicators]="true"
+            [useKeyboard]="true"
+            [useMouseWheel]="false"
+            orientation="ltr"
+            *ngIf="slides?.length > 0"
+            [maintainAspectRatio]="false"
+            [slideHeight]="'30rem'"
+          >
+            <!-- [proportion]="setProportion()" -->
+            <mat-carousel-slide
+              #matCarouselSlide
+              *ngFor="let slide of slides; let i = index"
+              [image]="slide.foto"
+              overlayColor="#00000040"
+              [hideOverlay]="false"
+            >
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <a
+                  [href]="slide.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="slide.foto"
+                    class="img-fluid img-thumbnail img-initial"
+                  />
+                </a>
+                <!-- <h1 class="text-white title"><strong>Afíliate</strong></h1> -->
+              </div>
+            </mat-carousel-slide>
+          </mat-carousel>
+        </div>
+      </div>
+      <!--/ Carucel de posters de eventos -->
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!-- Contenido Posters Eventos starts -->
+
+      <div class="row mt-4 justify-content-center">
+        <div class="col-12">
+          <h2>
+            Este evento ha sido posible gracias al Colegio de Arquitectos
+            Tabasqueños A..C., a la Federación de Colegios de Arquitectos de la
+            República Mexicana FECARM y desde luego a nuestros patrocinadores
+            que a continuación presentamos: <br />(Para ver la lista completa de
+            <a routerLink="./list">clic aquí</a> )
+          </h2>
+        </div>
+      </div>
+
+      <!-- Lona Digital -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-2 mt-4" *ngFor="let p of patrocinadores">
+          <div class="card" routerLink="./{{ p.idConvenio }}">
+            <img [src]="p.logo" [alt]="p.descripcion" />
+          </div>
+        </div>
+      </div>
+      <!--/ Lona Digital -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

@@ -1,0 +1,155 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+
+    <mat-card class="rounded-0 border">
+      <mat-card-title>
+        <button mat-mini-fab color="primary" class="mt-n3 mb-2" [routerLink]="['/proyectos']" matTooltip="Regresar" matTooltipPosition="right">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h2 class="color-blue-cat" *ngIf="!loading">{{proyecto.titulo}}</h2>
+      </mat-card-title>
+      <mat-card-content>
+    
+        <div class="row">
+          <div class="col-12 col-md-12" *ngIf="!loading">
+            <div class="d-flex justify-content-center mb-2">
+              <a href="{{fotosProyecto[0]?.foto}}" data-fancybox="gallery" *ngIf="fotosProyecto.length >= 1">
+                <img src="{{fotosProyecto[0]?.foto}}" class="img-fluid img-thumbnail img-initial">
+              </a>
+              <img src="assets/img/noFoto.jpg" class="img-fluid img-thumbnail img-initial" *ngIf="fotosProyecto.length == 0">
+            </div>
+
+            <div class="d-flex justify-content-center w-100 flex-wrap m-auto gallery-container">
+              <!--Muestra las 5 fotos debajo de la primer foto-->
+              <a class="position-relative" *ngFor="let foto of primerasCincoFotos; let i = index" href="{{foto?.foto}}" data-fancybox="gallery" >
+                <img src="{{foto?.foto}}" class="img-fluid img-thumbnail img-gallery" alt="">
+                <h2 class="d-flex align-items-center justify-content-center numberFotosRestantes" *ngIf="i == 4 && ultimasFotos.length > 0">+{{ultimasFotos.length}}</h2>
+              </a>
+
+              <!--Agrega las demás fotos en la galería, estas no se muestran al principio, solo se ven en la galería-->
+              <a class="d-none" *ngFor="let foto of ultimasFotos" href="{{foto?.foto}}" data-fancybox="gallery">
+                <img src="{{foto?.foto}}" class="img-fluid img-thumbnail img-gallery" alt="">
+              </a>
+            </div>
+
+            <blockquote class="blockquote mt-2">
+              <div [innerHTML]="proyecto.descripcion"></div>
+            </blockquote>            
+
+            <mat-tab-group>
+              <mat-tab label="Datos generales">
+                <div class="ml-1 mt-2 mat-typography">
+                  <dl class="row">
+                    <dt class="col-sm-3 col-md-3 col-lg-3 col-xl-2">Arquitectos</dt>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10">{{proyecto.arquitectos}}</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-3 col-md-3 col-lg-3 col-xl-2">Área</dt>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10">{{proyecto.area}} m²</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-3 col-md-3 col-lg-3 col-xl-2">Año</dt>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10">{{proyecto.anio}}</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-3 col-md-3 col-lg-3 col-xl-2">Fotografías</dt>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.fotografias != ''">{{proyecto.fotografias}}</dd>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.fotografias == ''">(Dato no proporcionado)</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-3 col-md-3 col-lg-3 col-xl-2">Proveedores</dt>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.proveedores != ''">{{proyecto.proveedores}}</dd>
+                    <dd class="col-sm-9 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.proveedores == ''">(Dato no proporcionado)</dd>
+                  </dl>
+                </div>                
+              </mat-tab>
+
+              <mat-tab label="Más detalles">
+                <div class="ml-1 mt-2 mat-typography">
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Curado</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.curado != ''">{{proyecto.curado}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.curado == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Equipo de diseño</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.equipoDeDisenio != ''">{{proyecto.equipoDeDisenio}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.equipoDeDisenio == ''">(Dato no proporcionado)</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Clientes</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.clientes != ''">{{proyecto.clientes}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.clientes == ''">(Dato no proporcionado)</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Ingeniería</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.ingenieria != ''">{{proyecto.ingenieria}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.ingenieria == ''">(Dato no proporcionado)</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Paisajismo</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.paisajismo != ''">{{proyecto.paisajismo}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.paisajismo == ''">(Dato no proporcionado)</dd>
+                  </dl>
+      
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Consultores</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.consultores != ''">{{proyecto.consultores}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.consultores == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Constructora</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.constructora != ''">{{proyecto.constructora}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.constructora == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Colaboración</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.colaboradores != ''">{{proyecto.colaboradores}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.colaboradores == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Ciudad</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.ciudad != ''">{{proyecto.ciudad}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.ciudad == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">País</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.pais != ''">{{proyecto.pais}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.pais == ''">(Dato no proporcionado)</dd>
+                  </dl>
+  
+                  <dl class="row">
+                    <dt class="col-sm-4 col-md-3 col-lg-3 col-xl-2">Ubicación</dt>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10" *ngIf="proyecto.ubicacion != ''">{{proyecto.ubicacion}}</dd>
+                    <dd class="col-sm-8 col-md-9 col-lg-9 col-xl-10 font-italic text-muted" *ngIf="proyecto.ubicacion == ''">(Dato no proporcionado)</dd>
+                  </dl>
+                </div>                
+              </mat-tab>
+            </mat-tab-group>            
+          </div>          
+        </div>
+
+        <!--Div a mostrar cuando estén cargando los datos-->
+        <div class="alert alert-light text-center" *ngIf="loading">
+          <p class="d-flex justify-content-center">
+            <mat-spinner></mat-spinner>
+          </p>
+        </div>
+        
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

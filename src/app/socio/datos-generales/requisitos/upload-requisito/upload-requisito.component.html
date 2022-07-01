@@ -1,0 +1,56 @@
+<h2 mat-dialog-title class="color-blue-cat">Subir {{titleRequisito}}</h2>
+
+<mat-dialog-content class="mat-typography">
+  
+  <div class="row">
+    <div class="col-md-12 text-center">
+
+      <div appNgDropRequisito [ngClass]="{'file-over': estaSobreElemento}" [archivos]="requisitoFile" (mouseSobre)="estaSobreElemento = $event" class="well drop-zone pb-2 d-none d-md-block">
+        <h4>Arrastra tu archivo de {{titleRequisito}} aquí</h4>
+        <img src="assets/img/drop-file.png">
+      </div>
+
+      <p class="d-none d-md-block">o</p>
+
+      <a mat-raised-button class="text-decoration-none" color="accent" (click)="fileInput.click()">
+        Selecciona tu archivo
+        <input class="form-control" #fileInput type="file" accept=".pdf" (change)="onChangeFile($event)" style="display:none;">
+      </a>
+    </div>    
+  </div>
+  
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="bg-blue-cat">
+          <tr>
+            <td class="text-white">#</td>
+            <td class="text-white">Nombre archivo</td>
+            <td class="text-white">Tamaño</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let archivo of requisitoFile; let i = index">
+            <td>{{i+1}}</td>
+            <td [ngClass]="{'text-green': archivo.progreso >= 100}">{{archivo.nombreArchivo}}</td>
+            <td *ngIf="archivo.archivo.size <= 1000000">{{ archivo.archivo.size / 1024 | number: '.2-2' }} KB</td>
+            <td *ngIf="archivo.archivo.size >= 1000000">{{ archivo.archivo.size / 1024/1024 | number: '.2-2' }} MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end mt-1 mb-0 buttons-actions">
+  <button type="button" 
+          class="mr-1 btn-upload" 
+          mat-raised-button color="primary"
+          [disabled]="requisitoFile.length == 0" 
+          (click)="uploadRequisito()">
+    Cargar archivo
+  </button>
+  <button type="button" class="mr-1" mat-raised-button color="warn" (click)="limpiarArchivo()">Limpiar</button>
+  <a mat-raised-button class="btn-gray-cat text-decoration-none" (click)="closeDialog()">Cancelar</a>
+</mat-dialog-actions>

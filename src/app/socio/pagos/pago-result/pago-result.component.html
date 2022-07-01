@@ -1,0 +1,92 @@
+<div class="row mt-3 mb-5 mx-3 mx-md-0" *ngIf="existDataPagoLocalStorage">
+  <div class="col-12 col-md-10 offset-md-1 justify-content-center">
+
+    <mat-card class="rounded-0 border text-center" *ngIf="!loading">
+      <mat-card-content>
+
+        <mat-icon [ngClass]="{'text-success': transactionCompleted, 'text-danger': !transactionCompleted}" class="icon-material">
+          {{transactionCompleted == true ? 'check_circle' : 'cancel'}}
+        </mat-icon>
+        
+        <h2 class="color-blue-cat">
+          {{transactionCompleted == true ? 'Operación exitosa' : 'Operación fallida'}}
+        </h2>
+
+        <h4 *ngIf="transactionCompleted">A continuación, te mostramos los detalles del pago</h4>
+
+        <div class="d-flex justify-content-center" *ngIf="!transactionCompleted">
+          <div class="alert alert-danger mt-2 mb-4">
+            Tarjeta declinada. Verifica los datos de tu tarjeta. Si el problema persiste, intenta con otra tarjeta.
+          </div>
+        </div> 
+
+        <div class="row">
+          <div class="col-md-4 offset-md-4">
+
+            <table class="table table-border table-responsive-md mat-typography">
+              <tr>
+                <td class="text-white" [ngClass]="{'bg-success': transactionCompleted, 'bg-blue-cat': !transactionCompleted}">
+                  Folio
+                </td>
+                <td>{{pago?.tokenId}}</td>
+              </tr>
+              <tr>
+                <td class="text-white" [ngClass]="{'bg-success': transactionCompleted, 'bg-blue-cat': !transactionCompleted}">
+                  Estatus de la transacción
+                </td>
+                <td>
+                  {{transactionCompleted == true ? 'Aprobado' : 'Declinado'}}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-white" [ngClass]="{'bg-success': transactionCompleted, 'bg-blue-cat': !transactionCompleted}">
+                  Concepto
+                </td>
+                <td>{{pago?.producto}}</td>
+              </tr>
+              <tr>
+                <td class="text-white" [ngClass]="{'bg-success': transactionCompleted, 'bg-blue-cat': !transactionCompleted}">
+                  Precio
+                </td>
+                <td>{{pago?.amount | currency:'MXN'}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center" *ngIf="transactionCompleted">
+          <div class="alert alert-success mt-2 mb-4">
+            Conserve su folio para dudas y/o aclaraciones
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button mat-raised-button class="btn-blue-cat mb-3" [routerLink]="['/historial-pagos']" *ngIf="transactionCompleted">
+            Ver mi historial de pagos
+          </button>
+  
+          <button mat-raised-button class="btn-blue-cat mt-3 mb-3 mr-md-3" [routerLink]="['/pago-online']" *ngIf="!transactionCompleted">
+            Volver a intentar
+          </button>
+  
+          <button mat-raised-button class="btn-gray-cat mt-3 mb-3" [routerLink]="['/datos-generales']" *ngIf="!transactionCompleted">
+            Cancelar la operación y volver a mi perfil
+          </button>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <div class="alert alert-light text-center" *ngIf="loading">
+      <p class="d-flex justify-content-center">
+        <mat-spinner></mat-spinner>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!--Div a mostrar cuando no haya datos del Pago en el localStorage-->
+<div *ngIf="!existDataPagoLocalStorage">
+  <app-not-found></app-not-found>
+</div>

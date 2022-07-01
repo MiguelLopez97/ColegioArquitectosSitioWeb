@@ -1,0 +1,66 @@
+h2 {
+    font-family: Avenir Lt Std-Book !important;
+}
+
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 1.1rem;
+    border-left: 5px solid #2054a1;
+
+    p {
+        font-style: italic;
+        font-size: 1rem;
+    }
+}
+
+.img-initial {
+    width: 550px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-gallery {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+}
+
+//Número que indica las fotografías restantes por ver
+.numberFotosRestantes {
+    font-size: 50px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute; 
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 51;
+}
+
+//Remueve el margen derecho de las filas donde se encuentran los datos de 'Detalles del proyecto'
+dl.row {
+    margin-right: 0px;
+}
+
+//Responsive para la galería de imágenes 
+@media (max-width: 1164px) {
+    .img-gallery {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 1031px) {
+    .img-gallery {
+        width: 85px;
+        height: 85px;
+        object-fit: cover;
+    }
+}
+//End Responsive para la galería de imágenes

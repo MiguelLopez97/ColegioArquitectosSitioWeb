@@ -1,0 +1,15 @@
+//Elimina los márgenes derecha e izquierda de la clase 'row' de Bootstrap
+.row { margin-left: inherit; margin-right: inherit; }
+
+hr {
+    border-top: 1px solid #0066cc;
+}
+
+h4 {
+    font-family: Avenir Lt Std-Book !important;
+}
+
+//Cambia el puntero a "no permitido" cuando se pasa el mouse sobre un input deshabilitado
+input[disabled], button[disabled] {
+    cursor: not-allowed;
+}

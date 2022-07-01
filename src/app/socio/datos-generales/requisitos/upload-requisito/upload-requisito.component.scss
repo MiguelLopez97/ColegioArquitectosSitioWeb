@@ -1,0 +1,28 @@
+/* Drop Zone */
+.drop-zone { 
+	border: dashed 3px lightgray; 
+	opacity: 0.5; 
+	color: #666; 
+	text-align: center 
+}
+
+.file-over { 
+	border: dashed 3px dodgerblue; 
+}
+
+//Cambia el puntero a "no permitido" cuando se pasa el mouse sobre un input deshabilitado
+button[disabled] {
+    cursor: not-allowed;
+}
+
+//Responsive para los botones de 'Cargar fotografías', 'Limpiar' y 'Cancelar'
+@media (max-width: 576px) {
+    .buttons-actions {
+		justify-content: center !important;
+		margin-bottom: -20px !important;
+
+		button, a{
+			margin-bottom: 12px;
+		}
+	}
+}

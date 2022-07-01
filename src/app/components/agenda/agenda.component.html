@@ -1,0 +1,90 @@
+<section class="consejo-directivo mb-5">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Agenda</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <!-- Contenido starts -->
+      <div class="row" *ngIf="eventos.length && !loading">
+        <div class="col-12" *ngFor="let item of agendaTemporal">
+          <div class="col-12" *ngFor="let mes of item.eventos">
+            <h1 class="mes text-decoration text-center my-3">{{ mes.mes }} {{ mes.anio }}</h1>
+
+            <div class="row row-equal">
+              <div class="col-12 col-md-3 mt-4 mt-md-0" *ngFor="let evento of mes.evento">
+                <mat-card class="card h-100" [routerLink]="['/agenda/evento', evento.idAgenda]">
+                  <div class="img-container my-2 mx-0">
+                    <img mat-card-image [src]="evento.flyer" [alt]="evento.descripcion"/>
+                  </div>
+                  <mat-card-header>
+                    <mat-card-title>{{ evento.descripcion }}</mat-card-title>
+                    <mat-card-subtitle>
+                      Por {{ evento.organizador }}
+                    </mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>
+                      <strong>Fecha Inicio:</strong>
+                      {{ evento.fechaInicio | date: "shortDate" }}
+                      <br />
+                      <strong>Fecha Fin:</strong>
+                      {{ evento.fechaFin | date: "shortDate" }} <br />
+                      <strong>Horario:</strong> {{ evento.horario }}
+                    </p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards Starts -->
+          <!-- <div class="row equal">
+            <div
+              class="col-12 col-md-3 mt-4 mt-md-0"
+              *ngFor="let evento of mes.evento"
+            >
+              <mat-card
+                class="card h-100"
+                [routerLink]="['/agenda/evento', evento.idAgenda]"
+              >
+                <div class="img-container my-2 mx-0">
+                  <img
+                    mat-card-image
+                    [src]="evento.flyer"
+                    [alt]="evento.descripcion"
+                  />
+                </div>
+                <mat-card-header>
+                  <mat-card-title>{{ evento.descripcion }}</mat-card-title>
+                  <mat-card-subtitle
+                    >Por {{ evento.organizador }}</mat-card-subtitle
+                  >
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    <strong>Fecha Inicio:</strong>
+                    {{ evento.fechaInicio | date: "shortDate" }}
+                    <br />
+                    <strong>Fecha Fin:</strong>
+                    {{ evento.fechaFin | date: "shortDate" }} <br />
+                    <strong>Horario:</strong> {{ evento.horario }}
+                  </p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div> -->
+          <!-- Cards Ends -->
+        </div>
+      </div>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!-- Contenido starts -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

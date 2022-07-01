@@ -1,0 +1,35 @@
+.img-container {
+  height: 300px;
+  width: auto;
+  margin: 0;
+  overflow: hidden;
+}
+
+.img-container > img {
+  height: 100%;
+  width: 100%;
+  margin: 0 !important;
+  object-fit: cover;
+  transform-origin: 50% 65%;
+  transition: transform 3s, filter 3s ease-in-out;
+  cursor: pointer;
+}
+
+.img-container:hover > img {
+  transform: scale(1.3);
+}
+
+.search-bar {
+  width: 250px;
+}
+
+.row.equal {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

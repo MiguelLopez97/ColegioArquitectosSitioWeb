@@ -1,0 +1,93 @@
+<section class="consejo-directivo mb-5">
+  <!-- <div class="row m-0 header justify-content-center">
+    <h1 class="title">Patrocinadores</h1>
+  </div> -->
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Go Back"
+        [routerLink]="['../']"
+      >
+        <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+      </button>
+
+      <!-- Tabla Patrocinadores -->
+      <div class="row mt-5">
+        <div class="col-12">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef>Patrocinador</th>
+              <td
+                class="patrocinador-container"
+                mat-cell
+                *matCellDef="let element"
+              >
+                <div
+                  routerLink="../{{ element.idConvenio }}"
+                  class="d-flex align-items-center flex-column text-center"
+                >
+                  <div class="img-container rounded-circle">
+                    <img [src]="element.logo" [alt]="element.descripcion" />
+                  </div>
+                  <h4>{{ element.descripcion }}</h4>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Benaficio Column -->
+            <ng-container matColumnDef="beneficio">
+              <th mat-header-cell *matHeaderCellDef>Beneficios</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.beneficio }}
+              </td>
+            </ng-container>
+
+            <!-- Sitio Web Column -->
+            <ng-container matColumnDef="sitioWeb">
+              <th mat-header-cell *matHeaderCellDef>Sitio Web</th>
+              <td mat-cell *matCellDef="let element">
+                <a [href]="element.paginaWeb" target="_blank">{{
+                  element.descripcion
+                }}</a>
+              </td>
+            </ng-container>
+
+            <!-- Correo Column -->
+            <ng-container matColumnDef="correo">
+              <th mat-header-cell *matHeaderCellDef>Correo</th>
+              <td mat-cell *matCellDef="let element">
+                <a href="mailto:{{ element.correoElectronico }}">{{
+                  element.correoElectronico
+                }}</a>
+              </td>
+            </ng-container>
+
+            <!-- Telefono Column -->
+            <ng-container matColumnDef="telefono">
+              <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+              <td mat-cell *matCellDef="let element">{{ element.telefono }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tabla Patrocinadores -->
+
+      <!-- Spinner -->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!--/ Spinner  -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

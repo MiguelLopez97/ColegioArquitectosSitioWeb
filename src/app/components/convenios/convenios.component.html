@@ -1,0 +1,97 @@
+<section class="contenido mb-5">
+  <div class="row m-0 header justify-content-center">
+    <h1 class="title">Convenios</h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <!-- Convenios Starts -->
+      <!---
+      <div class="row equal">
+        <div class="col-12 col-lg-3 mt-4" *ngFor="let convenio of convenios">
+          <mat-card class="card h-100">
+            <mat-card-header>
+              <mat-card-title>{{ convenio.entidad }}</mat-card-title>
+              <mat-card-subtitle
+                ><span class="badge badge-pill badge-success">{{
+                  convenio.tipoConvenio
+                }}</span></mat-card-subtitle
+              >
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                <strong>Representante:</strong> {{ convenio.representante
+                }}<br /><strong>Vigencia:</strong>
+                {{ convenio.vigencia | date: "shortDate" }}<br />
+                <strong>Correo:</strong>
+                {{ convenio.correoElectronico }}
+                <br />
+                <strong>Teléfono:</strong>
+                {{ convenio.telefono }} <br />
+                <strong>Beneficio:</strong> {{ convenio.beneficio }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      --->
+
+      <!--Div a mostrar cuando estén cargando los datos-->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner></mat-spinner>
+        </p>
+      </div>
+
+      <div class="row" *ngIf="!loading">
+        <div class="col d-flex align-items-end flex-column">
+          <form class="form-inline my-2 my-lg-0">
+            <mat-form-field class="search-bar">
+              <mat-label>Buscar convenio</mat-label>
+              <input matInput type="text" name="busqueda" [(ngModel)]="value" placeholder="Realiza una búsqueda" (keyup)="onSearchKey($event)">
+              <button mat-button *ngIf="value" matSuffix mat-icon-button (click)="onEscEvent()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+
+      <!---Div a mostrar cuando no encuentre coincidencias--->
+      <div class="alert alert-primary" role="alert" *ngIf="!loading && tempData.length == 0">
+        No se han encontrado resultados para: {{value}}
+      </div>
+
+      <div class="row" *ngIf="!loading">
+        <div class="col-12 col-lg-6 mt-4" *ngFor="let convenio of tempData">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-center align-items-center text-center h-card-convenio">
+              <h5 class="card-title">{{convenio.entidad}}</h5>
+            </div>
+            <div class="card-body mt-n2 mb-3">
+              <img [src]="convenio.logo" class="rounded mx-auto d-block img-fluid">
+              <span class="badge badge-pill badge-success mb-3">{{convenio.tipoConvenio}}</span>
+                <p class="card-text">
+                  <!-- <dt>Representante:</dt> 
+                  <dd>{{convenio.representante}}</dd> -->
+                  <dt>Vigencia:</dt>
+                  <dd>{{convenio.vigencia | date: "shortDate"}}</dd>
+                  <dt>Correo:</dt>
+                  <dd>{{convenio.correoElectronico}}</dd>
+                  <dt>Teléfono:</dt>
+                  <dd>{{convenio.telefono}}</dd>
+                  <!-- <dt>Contacto:</dt>
+                  <dd>{{convenio.contacto}}</dd> -->
+                  <dt>Beneficio:</dt> 
+                  <dd>{{convenio.beneficio}}</dd>
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Convenios Ends -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+//Estilos para ajustar el contenido del innerHTML
+:host ::ng-deep .col-12 {
+  position: relative;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+:host ::ng-deep .col-12 img {
+  max-width: 100%;
+}
+
+/***************** Iconos para compartir en Facebook y Twitter *****************/
+.btn-share-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-share-facebook {
+  background-color: #4267b2 !important;
+}
+
+.btn-share-fb-label {
+  margin-top: 0.5rem;
+  color: #4267b2 !important;
+}
+
+.mat-btn-wrapper {
+  padding: 0px;
+  display: inline-block;
+  line-height: 24px;
+  vertical-align: middle;
+}
+
+.btn-share-icon {
+  font-size: 1.5rem;
+}
+
+.btn-share-twitter {
+  background-color: #00acee !important;
+}
+
+.btn-share-twt-label {
+  margin-top: 0.5rem;
+  color: #00acee !important;
+}
+
+.btn-share-whatsapp {
+  background-color: #1ebea5 !important;
+}
+
+.btn-share-whp-label {
+  margin-top: 0.5rem;
+  color: #1ebea5 !important;
+}

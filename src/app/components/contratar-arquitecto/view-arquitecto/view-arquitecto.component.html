@@ -1,0 +1,240 @@
+<section class="view-afiliados mb-5">
+  <div class="row m-0 header justify-content-center text-center">
+    <h1 class="title">
+      {{ socio?.nombreCompleto }} {{ socio?.apellidoPat }}
+      {{ socio?.apellidoMat }}
+    </h1>
+  </div>
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8">
+      <!-- Afiliado starts -->
+      <button
+        mat-mini-fab
+        color="primary"
+        aria-label="Go Back"
+        [routerLink]="[originRoute ? originRoute : '/contratar-arquitecto']"
+      >
+        <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+      </button>
+
+      <div class="col">
+        <div class="d-flex justify-content-end">
+          <div class="btn-share-container mr-3">
+            <button
+              mat-fab
+              class="btn-share-twitter"
+              (click)="shareResource('t')"
+            >
+              <span class="mat-btn-wrapper">
+                <fa-icon
+                  [icon]="icons.twitter"
+                  class="btn-share-icon"
+                ></fa-icon>
+              </span>
+            </button>
+            <p class="btn-share-twt-label text-center">
+              <b>Compartir en Twitter</b>
+            </p>
+          </div>
+          <div class="btn-share-container mr-3">
+            <button
+              mat-fab
+              class="btn-share-facebook"
+              (click)="shareResource('f')"
+            >
+              <span class="mat-btn-wrapper">
+                <fa-icon
+                  [icon]="icons.facebook"
+                  class="btn-share-icon"
+                ></fa-icon>
+              </span>
+            </button>
+            <p class="btn-share-fb-label text-center">
+              <b>Compartir en Facebook</b>
+            </p>
+          </div>
+          <div class="btn-share-container">
+            <button
+              mat-fab
+              class="btn-share-whatsapp"
+              (click)="shareResource('w')"
+            >
+              <span class="mat-btn-wrapper">
+                <fa-icon
+                  [icon]="icons.whatsapp"
+                  class="btn-share-icon"
+                ></fa-icon>
+              </span>
+            </button>
+            <p class="btn-share-whp-label text-center">
+              <b>Compartir en Whatsapp</b>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="afiliado" *ngIf="socio">
+        <div class="row text-center">
+          <div class="col">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="row">
+                  <div class="col">
+                    <img
+                      height="300"
+                      width="auto"
+                      [src]="socio.avatarUri"
+                      [alt]="socio?.nombreCompleto"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3 order-md-12">
+                <p class="text text-justify">
+                  {{ socio?.curriculumVitae }}
+                </p>
+              </div>
+              <div class="col-12 col-md-6 text-left mt-md-5 order-md-2">
+                <div
+                  class="row my-md-3 justify-content-end"
+                  *ngIf="idSocio == idSocioDesencriptado"
+                >
+                  <button
+                    mat-mini-fab
+                    color="link"
+                    aria-label="Editar"
+                    [routerLink]="['/datos-generales']"
+                  >
+                    <mat-icon class="mat-icon">edit</mat-icon>
+                  </button>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <p class="text">
+                      <span class="label">Correo:</span>
+                      {{ socio?.correoElectronico }}
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p class="text">
+                      <span class="label">Teléfono Fijo:</span>
+                      {{ socio?.telefonoFijo }}
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p class="text">
+                      <span class="label">Teléfono Móvil:</span>
+                      {{ socio?.telefonoMovil }}
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p class="text">
+                      <span class="label">Dirección:</span>
+                      {{ socio?.calle }} #{{ socio?.numero }}, C.P.
+                      {{ socio?.codigoPostal }}, Col. {{ socio?.colonia }},
+                      {{ socio?.ciudad }},
+                      {{ socio?.estado }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row mt-3">
+              <div class="col">
+                <p class="text text-justify">
+                  {{ socio?.curriculumVitae }}
+                </p>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row divider my-3" *ngIf="certificados.length > 0">
+        <div class="col-12 mt-3">
+          <h1>Certificaciones</h1>
+          <div class="row equal">
+            <div
+              class="col-12 col-md-3 mt-3 mt-md-0"
+              *ngFor="let c of certificados"
+              style="cursor: pointer"
+            >
+              <mat-card class="card text-left h-100">
+                <mat-card-header>
+                  <mat-card-title>{{ c.descripcion }}</mat-card-title>
+                  <mat-card-subtitle
+                    >Fecha de Constancia:
+                    {{
+                      c.fechaConstancia | date: "shortDate"
+                    }}</mat-card-subtitle
+                  >
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    <strong>Vigente desde:</strong>
+                    {{ c.vigenteDesde | date: "shortDate" }}
+                    <br />
+                    <strong>Vigente Hasta:</strong>
+                    {{ c.vigenteHasta | date: "shortDate" }}
+                  </p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row divider my-3" *ngIf="proyectos.length > 0">
+        <div class="col-12 mt-3">
+          <h1>Proyectos</h1>
+          <div class="row equal">
+            <div
+              class="col-12 col-md-3 mt-3 mt-md-0"
+              *ngFor="let p of proyectos"
+              style="cursor: pointer"
+              [routerLink]="['./proyecto/', p.idProyecto]"
+              (click)="shareArquitecto(p)"
+            >
+              <mat-card class="card text-left h-100">
+                <mat-card-header>
+                  <mat-card-title>{{ p.titulo }}</mat-card-title>
+                  <mat-card-subtitle>
+                    {{ p.anio }} <br />
+                    <span class="badge badge-pill badge-success">{{
+                      p.categoria
+                    }}</span></mat-card-subtitle
+                  >
+                </mat-card-header>
+                <mat-card-content class="img-container">
+                  <img
+                    [src]="p.fotos ? p?.fotos[0]?.foto : ''"
+                    [alt]="p.titulo"
+                  />
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <h4 class="alert-heading">Cargando</h4>
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="50" mode="indeterminate"></mat-spinner>
+        </p>
+        <p class="mb-0">Espere por favor</p>
+      </div>
+
+      <!-- Afiliado ends -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

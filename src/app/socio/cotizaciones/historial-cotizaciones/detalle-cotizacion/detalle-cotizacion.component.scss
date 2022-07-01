@@ -1,0 +1,12 @@
+h2 h3 {
+  font-family: Avenir Lt Std-Book !important;
+}
+
+h3 {
+  font-weight: 600;
+}
+
+// Remueve el marge derecho de las filas donde se encuentran los datos de 'Detalles de la cotización'
+dl.row {
+  margin-right: 0px;
+}

@@ -1,0 +1,8 @@
+//Elimina los márgenes derecha e izquierda de la clase 'row' de Bootstrap
+.row { margin-left: inherit; margin-right: inherit; }
+
+//Reduce el grosor del texto de los badges (Etiquetas de Estatus)
+.badge {
+  font-size: 80% !important;
+  font-weight: 500 !important;
+}

@@ -1,0 +1,57 @@
+ <!--Div a mostrar cuando estén cargando los datos-->
+ <div class="alert alert-light text-center" *ngIf="loading">
+  <h4 class="alert-heading">Cargando</h4>
+  <p class="d-flex justify-content-center"><mat-spinner diameter="50" mode="indeterminate"></mat-spinner></p>
+  <p class="mb-0">Espere por favor</p>
+</div>
+
+<div class="row mt-3">
+  <div class="col-xs-12 col-md-4 mb-4" *ngFor="let requisito of requisitos; let i = index">
+    <mat-card class="h-100">
+      <h3 class="mat-h3 color-blue-cat">{{requisito.requisito}}</h3>
+
+      <mat-card-content class="mat-typography">
+        <div>
+          <dt>Detalles de archivo</dt>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item font-italic disabled pb-1" *ngIf="requisito.evidencia != ''">
+              {{requisito.evidencia}}
+            </li>
+            <li class="list-group-item" *ngIf="requisito.evidencia != ''">
+              <mat-icon class="text-success" *ngIf="requisito.cotejado == true">check</mat-icon>
+              <mat-icon class="text-warning" *ngIf="requisito.cotejado == false">access_time</mat-icon>
+              <span class="badge badge-pill" [ngClass]="{'badge-success': requisito.cotejado == true, 'badge-warning': requisito.cotejado == false}">
+                {{requisito.cotejado == true ? "Archivo revisado y validado" : "Archivo en revisión"}}
+              </span>
+            </li>
+            <li class="list-group-item" *ngIf="requisito.evidencia == ''">
+              <mat-icon class="text-danger">error_outline</mat-icon>
+              <span class="badge badge-pill badge-danger">
+                Aún no ha cargado un archivo
+              </span>
+            </li> 
+          </ul>
+        </div>
+        
+        <div class="text-right">
+          <button mat-mini-fab color="accent" matTooltip="Subir archivo" matTooltipPosition="above" (click)="openDialogUploadRequisito(requisito.idRequisito, requisito.requisito)">
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+
+          <button mat-mini-fab color="primary" matTooltip="Ver archivo cargado" matTooltipPosition="above" class="ml-1" *ngIf="requisito.evidencia != ''" (click)="openDialogViewPDF(requisito.evidencia, requisito.uriEvidencia)">
+            <mat-icon>description</mat-icon>
+          </button>
+
+          <button mat-mini-fab color="primary" matTooltip="Comentarios sobre el archivo" matTooltipPosition="above" class="ml-1" [matMenuTriggerFor]="menu" *ngIf="requisito.evidencia != ''">
+            <mat-icon>insert_comment</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="px-3 py-2">
+            {{requisito.comentario}}
+          </mat-menu>
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</div>

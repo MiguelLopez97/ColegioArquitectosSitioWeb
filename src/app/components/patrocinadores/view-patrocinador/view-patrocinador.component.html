@@ -1,0 +1,367 @@
+<section class="consejo-directivo mb-5">
+  <!-- <div class="row m-0 header justify-content-center">
+    <h1 class="title">Patrocinadores</h1>
+  </div> -->
+  <div class="row mt-3 mt-md-5 mx-3 mx-md-0">
+    <div class="col-md-2 col-0"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <div class="d-flex justify-content-between">
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Go Back"
+          [routerLink]="['../']"
+        >
+          <mat-icon class="mat-icon">keyboard_backspace</mat-icon>
+        </button>
+        <button
+          *ngIf="idPatrocinador === idEmpresaDecripted"
+          mat-mini-fab
+          color="link"
+          aria-label="Editar"
+          (click)="openDialog(idPatrocinador)"
+        >
+          <mat-icon class="mat-icon">edit</mat-icon>
+        </button>
+      </div>
+
+      <!-- Encabezado Patrocinador -->
+      <div class="row mt-5">
+        <div class="col-12 col-md-6">
+          <div class="title-container d-flex flex-column">
+            <img
+              [src]="convenio.logo"
+              [alt]="convenio.entidad"
+              class="patron-img"
+            />
+            <h1>{{ convenio.entidad }}</h1>
+            <!-- <div class="rating-container mt-2">
+              <ng-rating-bar
+                [(value)]="value"
+                [ratingCount]="5"
+                [resetAble]="true"
+                colorDefault="gray"
+                [styles]="styles"
+              ></ng-rating-bar>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="enlaces-contacto">
+            <h3 class="mb-0 font-weight-bold">Enlaces de Contacto</h3>
+            <a
+              href="mailto:{{ convenio.correoElectronico }}"
+              target="blank"
+              *ngIf="convenio.correoElectronico.length > 0"
+            >
+              <fa-icon
+                class="icon icon-mail"
+                [matTooltip]="convenio.correoElectronico"
+                style="color: #0541a0"
+                [icon]="icons.mail"
+              ></fa-icon>
+            </a>
+            <a
+              href="tel:{{ convenio.telefono }}"
+              target="blank"
+              *ngIf="convenio.telefono.length > 0"
+            >
+              <fa-icon
+                class="icon icon-phone"
+                [matTooltip]="convenio.telefono"
+                style="color: #0541a0"
+                [icon]="icons.phone"
+              ></fa-icon>
+            </a>
+            <a
+              href="https://{{ convenio.paginaWeb }}"
+              target="blank"
+              *ngIf="convenio.paginaWeb.length > 0"
+            >
+              <fa-icon
+                class="icon icon-web"
+                [matTooltip]="convenio.paginaWeb"
+                style="color: #0541a0"
+                [icon]="icons.webpage"
+              ></fa-icon>
+            </a>
+            <a
+              href="https://wa.me/52{{ convenio.whatsApp }}"
+              target="blank"
+              *ngIf="convenio.whatsApp.length > 0"
+            >
+              <fa-icon
+                class="icon icon-wa"
+                [matTooltip]="convenio.whatsApp"
+                style="color: #4caf50"
+                [icon]="icons.whatsapp"
+              ></fa-icon>
+            </a>
+            <a
+              href="https://www.facebook.com/{{ convenio.facebook }}"
+              target="blank"
+              *ngIf="convenio.facebook.length > 0"
+            >
+              <fa-icon
+                class="icon icon-fbk"
+                [matTooltip]="convenio.facebook"
+                style="color: #1773ea"
+                [icon]="icons.facebook"
+              ></fa-icon>
+            </a>
+            <a
+              href="https://www.twitter.com/{{ convenio.twitter }}"
+              target="blank"
+              *ngIf="convenio.twitter.length > 0"
+            >
+              <fa-icon
+                class="icon icon-twt"
+                [matTooltip]="convenio.twitter"
+                style="color: #00a5e5"
+                [icon]="icons.twitter"
+              ></fa-icon>
+            </a>
+            <a
+              href="https://www.instagram.com/{{ convenio.instagram }}"
+              target="blank"
+              *ngIf="convenio.instagram.length > 0"
+            >
+              <fa-icon
+                class="icon icon-ig"
+                [matTooltip]="convenio.instagram"
+                style="color: #d6348f"
+                [icon]="icons.instagram"
+              ></fa-icon>
+            </a>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <h3 class="mb-0 font-weight-bold">¿Quiénes somos?</h3>
+              <p>{{ convenio.descripcion }}</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <h3 class="mb-0 font-weight-bold">Vigencia</h3>
+              <p>{{ convenio.vigencia | date: "d MMMM y" }}</p>
+              <h3 class="mb-0 font-weight-bold">Beneficios</h3>
+              <p>{{ convenio.beneficio }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ Encabezado Patrocinador -->
+
+      <!-- Galería -->
+      <div class="row mt-5">
+        <div class="col-1">
+          <button
+            class="mt-2"
+            mat-mini-fab
+            color="primary"
+            aria-label="Go Back"
+            [disabled]="previousPatrocinador === 0"
+            routerLink="/patrocinadores/{{ previousPatrocinador }}"
+          >
+            <mat-icon class="mat-icon">skip_previous</mat-icon>
+          </button>
+        </div>
+        <div
+          class="col-12 col-md-10 justify-content-center text-center"
+          *ngIf="fotos.length === 0"
+        >
+          <h1>¡Lo sentimos!<br />No hay fotos para mostrar</h1>
+        </div>
+        <div
+          class="col-12 col-md-10 justify-content-center gallery-container"
+          *ngIf="fotos.length > 0"
+        >
+          <div class="row">
+            <div class="col-12 col-md-6 p-0" *ngIf="fotos && fotos[0]?.foto">
+              <div class="image">
+                <a
+                  [href]="fotos && fotos[0]?.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="fotos && fotos[0]?.foto"
+                    class="img-fluid img-thumbnail img-initial"
+                  />
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="row">
+                <div class="col-12 p-0" *ngIf="fotos && fotos[1]?.foto">
+                  <div class="image">
+                    <a
+                      [href]="fotos && fotos[1]?.foto"
+                      data-fancybox="gallery"
+                      class="flyer_link"
+                    >
+                      <img
+                        [src]="fotos && fotos[1]?.foto"
+                        class="img-fluid img-thumbnail img-initial"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-6 p-0">
+                  <div class="row p-0">
+                    <div class="col-12" *ngIf="fotos && fotos[2]?.foto">
+                      <div class="image">
+                        <a
+                          [href]="fotos && fotos[2]?.foto"
+                          data-fancybox="gallery"
+                          class="flyer_link"
+                        >
+                          <img
+                            [src]="fotos && fotos[2]?.foto"
+                            class="img-fluid img-thumbnail img-initial"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row p-0">
+                    <div class="col-12" *ngIf="fotos && fotos[3]?.foto">
+                      <div class="image">
+                        <a
+                          [href]="fotos && fotos[3]?.foto"
+                          data-fancybox="gallery"
+                          class="flyer_link"
+                        >
+                          <img
+                            [src]="fotos && fotos[3]?.foto"
+                            class="img-fluid img-thumbnail img-initial"
+                          />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-12 col-md-6 p-0"
+                  *ngIf="fotos && fotos[4]?.foto"
+                >
+                  <div class="image">
+                    <a
+                      [href]="fotos && fotos[4]?.foto"
+                      data-fancybox="gallery"
+                      class="flyer_link"
+                    >
+                      <img
+                        [src]="fotos && fotos[4]?.foto"
+                        class="img-fluid img-thumbnail img-initial"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div
+              class="col-12 p-0"
+              *ngIf="fotos && fotos[5]?.foto"
+              [ngClass]="{
+                'last-photo': fotos.length === 6,
+                'col-md-6 last-photo': fotos.length === 7,
+                'col-md-4': fotos.length >= 8
+              }"
+            >
+              <div class="image">
+                <a
+                  [href]="fotos && fotos[5]?.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="fotos && fotos[5]?.foto"
+                    class="img-fluid img-thumbnail img-initial w-100"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              class="col-12 p-0"
+              *ngIf="fotos && fotos[6]?.foto"
+              [ngClass]="{
+                'col-md-6 last-photo': fotos.length === 7,
+                'col-md-4': fotos.length >= 8
+              }"
+            >
+              <div class="image">
+                <a
+                  [href]="fotos && fotos[6]?.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="fotos && fotos[6]?.foto"
+                    class="img-fluid img-thumbnail img-initial w-100"
+                  />
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-md-4 p-0" *ngIf="fotos && fotos[7]?.foto">
+              <div class="image">
+                <a
+                  [href]="fotos && fotos[7]?.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="fotos && fotos[7]?.foto"
+                    class="img-fluid img-thumbnail img-initial"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 p-0 last-photo" *ngIf="fotos && fotos[8]?.foto">
+              <div class="image">
+                <a
+                  [href]="fotos && fotos[8]?.foto"
+                  data-fancybox="gallery"
+                  class="flyer_link"
+                >
+                  <img
+                    [src]="fotos && fotos[8]?.foto"
+                    class="img-fluid img-thumbnail img-initial w-100"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-1">
+          <button
+            class="mt-2"
+            mat-mini-fab
+            color="primary"
+            aria-label="Go Back"
+            [disabled]="nextPatrocinador === 0"
+            routerLink="/patrocinadores/{{ nextPatrocinador }}"
+          >
+            <mat-icon class="mat-icon">skip_next</mat-icon>
+          </button>
+        </div>
+      </div>
+      <!--/ Galería -->
+
+      <!-- Spinner -->
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+      <!--/ Spinner  -->
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

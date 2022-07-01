@@ -1,0 +1,52 @@
+<section id="login">
+  <div class="transparencia">
+    <div class="container-fluid bg-transparent">
+      <div class="row full-height-vh m-0 bg-transparent">
+        <div class="col-12 d-flex align-items-center justify-content-center bg-transparent">
+          <div class="card bg-transparent">
+            <div class="card-content">
+              <div class="card-body login-img bg-transparent">
+                <div class="row m-0">
+  
+                  <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                    <img src="assets/img/logo_cat_nav1.png" class="img-fluid" width="400" height="230">
+                  </div>
+  
+                  <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                    <h2 class="card-title mb-2 text-center color-blue-cat">Iniciar sesión</h2>
+                    <p class="mb-3">Bienvenido, inicie sesión en su cuenta.</p>
+                    <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+  
+                      <mat-form-field class="col-12">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input matInput formControlName="correoElectronico">
+                        <mat-error *ngIf="correoNoValido">*Campo requerido</mat-error>
+                      </mat-form-field>
+  
+                      <mat-form-field class="col-12">
+                        <mat-label>Contraseña</mat-label>
+                        <input type="password" matInput formControlName="contrasenia">
+                        <mat-error *ngIf="contraseniaNoValida">*Campo requerido</mat-error>
+                      </mat-form-field>
+  
+                      <div class="fg-actions d-flex justify-content-between mt-4 mb-3">
+                        <button class="w-100" mat-raised-button type="submit" color="primary">Ingresar</button>
+                      </div>
+                    </form>
+  
+                    <hr class="m-0">
+  
+                    <div class="d-flex justify-content-center text-center mt-2 mb-2">
+                      <p>&copy; {{ currentDate | date: "yyyy" }} Colegio de Arquitectos Tabasqueños, A.C.</p>
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</section>

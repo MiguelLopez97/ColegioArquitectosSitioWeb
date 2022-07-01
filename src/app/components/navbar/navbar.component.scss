@@ -1,0 +1,119 @@
+$color-blue-king: #0066cc;
+$fontAvenir: Avenir LT Std-Book !important;
+
+nav {
+  font-family: $fontAvenir;
+}
+.nav-item,
+.mat-button,
+.mat-menu-item,
+.mat-menu-item-submenu-trigger,
+.form-inline > mat-form-field,
+.alert-text,
+.icon-text {
+  font-family: $fontAvenir;
+}
+
+.aligned-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.color-blue-king {
+  color: $color-blue-king;
+}
+
+.alert-primary {
+  color: white;
+  background-color: $color-blue-king;
+  border-color: $color-blue-king;
+}
+
+.is-logged {
+  cursor: pointer;
+}
+
+.patrocinadores-container {
+  width: 100%;
+  height: 2rem;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.patrocinadores-container:hover {
+  cursor: pointer;
+}
+
+.img-container {
+  width: 500%;
+  height: 2rem;
+  clear: both;
+  position: absolute;
+  animation-name: slider;
+  animation-duration: 40s;
+  animation-delay: -15s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: backwards;
+  animation-play-state: running;
+}
+
+.patron-img {
+  width: auto;
+  height: 2rem;
+  margin: 0 0.1rem;
+  float: left;
+  position: relative;
+}
+
+@keyframes slider {
+  0% {
+    transform: translateX(-95%);
+  }
+  100% {
+    transform: translateX(20%);
+  }
+}
+// Media Queries
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .patrocinadores-container {
+    width: 76%;
+  }
+
+  .img-container {
+    width: 120%;
+  }
+
+  @keyframes slider {
+    0% {
+      transform: translateX(-90%);
+    }
+    100% {
+      transform: translateX(90%);
+    }
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}

@@ -1,0 +1,332 @@
+<!---
+<div
+  class="alert alert-primary alert-dismissible fade show mb-0 alert-text"
+  role="alert"
+>
+  AVISO: Se estarán realizando varios cambios en el sitio web a partir de enero
+  de 2021.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+-->
+<section class="header" #header>
+  <div class="alert alert-dark mb-0" role="alert">
+    <div class="d-flex justify-content-between flex-column flex-md-row">
+      <div
+        class="patrocinadores-container mb-2 mb-md-0"
+        routerLink="/patrocinadores"
+      >
+        <div class="img-container">
+          <!-- <img
+            *ngFor="let p of patrocinadores"
+            [src]="p.logo"
+            [alt]="p.descripcion"
+            class="patron-img"
+          /> -->
+          <img
+            *ngFor="let p of patrocinadores; let i = index"
+            [src]="p.logo"
+            [alt]="i"
+            class="patron-img"
+          />
+        </div>
+      </div>
+
+      <div
+        class="
+          links-container
+          d-flex
+          flex-row
+          justify-content-md-start justify-content-center
+        "
+      >
+        <a
+          [routerLink]="['/afiliar']"
+          class="aligned-with-icon mr-4 color-blue-king"
+        >
+          <!-- <mat-icon class="mr-1">content_paste</mat-icon> -->
+          <mat-icon class="mr-1">create</mat-icon>
+          <span class="aligned-with-icon12 icon-text">Afíliate en Línea</span>
+        </a>
+
+        <a
+          [routerLink]="['/login']"
+          class="aligned-with-icon color-blue-king"
+          *ngIf="fullNameDesencriptado == ''"
+        >
+          <mat-icon class="mr-1">account_circle</mat-icon>
+          <span class="aligned-with-icon12 icon-text"
+            >Iniciar sesión en la aplicación</span
+          >
+        </a>
+
+        <!---Menú para las opciones de 'Socio'-->
+        <a
+          class="aligned-with-icon color-blue-king is-logged"
+          [matMenuTriggerFor]="menu"
+          *ngIf="userTypeId !== 5 && fullNameDesencriptado != ''"
+        >
+          <mat-icon class="mr-1">account_circle</mat-icon>
+          <span class="aligned-with-icon12 icon-text">{{
+            fullNameDesencriptado
+          }}</span>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </a>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/datos-generales']">
+            <mat-icon>assignment_ind</mat-icon>
+            <span>Mi Perfil</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/proyectos']">
+            <mat-icon>engineering</mat-icon>
+            <span>Mis Proyectos</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/solicitudes']">
+            <mat-icon>folder_open</mat-icon>
+            <span>Mis Solicitudes</span>
+          </button>
+          <button mat-menu-item [routerLink]="['/cotizaciones']">
+            <mat-icon>attach_money</mat-icon>
+            <span>Mis Cotizaciones</span>
+          </button>
+          <a #button mat-menu-item [matMenuTriggerFor]="pagos">
+            <mat-icon>point_of_sale</mat-icon>
+            Pagos
+          </a>
+          <button mat-menu-item (click)="openDialogChangePassword()">
+            <mat-icon>lock</mat-icon>
+            <span>Cambiar contraseña</span>
+          </button>
+          <button mat-menu-item (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu #pagos="matMenu">
+          <button mat-menu-item [routerLink]="['/pago-online']">
+            Pago en Línea
+          </button>
+          <button mat-menu-item [routerLink]="['/historial-pagos']">
+            Historial
+          </button>
+        </mat-menu>
+        <!---End Menú para las opciones de 'Socio'-->
+
+        <!---Menú para las opciones de 'Patrocinadores | Convenios'-->
+        <a
+          class="aligned-with-icon color-blue-king is-logged"
+          [matMenuTriggerFor]="menuP"
+          *ngIf="userTypeId === 5 && fullNameDesencriptado != ''"
+        >
+          <mat-icon class="mr-1">account_circle</mat-icon>
+          <span class="aligned-with-icon12 icon-text">{{
+            fullNameDesencriptado
+          }}</span>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </a>
+        <mat-menu #menuP="matMenu">
+          <button mat-menu-item [routerLink]="['/datos-generales']">
+            <mat-icon>assignment_ind</mat-icon>
+            <span>Mi Perfil</span>
+          </button>
+          <button mat-menu-item (click)="openDialogChangePassword()">
+            <mat-icon>lock</mat-icon>
+            <span>Cambiar contraseña</span>
+          </button>
+          <button mat-menu-item (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </mat-menu>
+        <!---End Menú para las opciones de 'Patrocinadores | Convenios'-->
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a
+            mat-button
+            [routerLink]="['/inicio']"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Inicio</a
+          >
+        </li>
+
+        <li class="nav-item dropdown">
+          <a #button mat-button [matMenuTriggerFor]="itemNosotros">Nosotros</a>
+          <mat-menu #itemNosotros="matMenu">
+            <button
+              mat-menu-item
+              [routerLink]="['../contenido']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              ¿Quiénes Somos?
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['../mensaje-presidente']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Mensaje del presidente
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['../afiliados']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Colegiados
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['../estatutos']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Estatutos
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['../consejo-directivo']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Consejo directivo
+            </button>
+          </mat-menu>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a mat-button [matMenuTriggerFor]="itemNoticias">Noticias</a>
+          <mat-menu #itemNoticias="matMenu">
+            <button
+              mat-menu-item
+              [routerLink]="['/noticias']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Prensa
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['/redes-sociales']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Redes Sociales
+            </button>
+          </mat-menu>
+        </li>
+
+        <li
+          class="nav-item dropdown"
+          [routerLink]="['../agenda']"
+          data-toggle="collapse"
+          data-target=".navbar-collapse.show"
+        >
+          <a mat-button>Agenda</a>
+        </li>
+
+        <!-- <li class="nav-item dropdown" [routerLink]="['../cursos']" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <a mat-button>Cursos</a>
+        </li> -->
+
+        <li class="nav-item dropdown">
+          <a mat-button [matMenuTriggerFor]="itemServicios">Servicios</a>
+          <mat-menu #itemServicios="matMenu">
+            <button
+              mat-menu-item
+              [routerLink]="['/contratar-arquitecto']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Contrata un Arquitecto
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['../afiliar']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Afíliate en línea
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['/normateca']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Normateca
+            </button>
+            <button
+              mat-menu-item
+              [routerLink]="['/convenios']"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.show"
+            >
+              Convenios Comerciales
+            </button>
+          </mat-menu>
+
+          <mat-menu #convenios="matMenu">
+            <button mat-menu-item>Comerciales</button>
+            <button mat-menu-item>Académicos</button>
+            <button mat-menu-item>Institucionales</button>
+          </mat-menu>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            mat-button
+            [routerLink]="['../contacto']"
+            data-toggle="collapse"
+            data-target=".navbar-collapse.show"
+            >Contacto</a
+          >
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <mat-form-field>
+          <mat-label>Búsqueda</mat-label>
+          <input
+            matInput
+            type="text"
+            name="busqueda"
+            [(ngModel)]="value"
+            placeholder="Realiza una búsqueda"
+          />
+          <button
+            mat-button
+            *ngIf="value"
+            matSuffix
+            mat-icon-button
+            aria-label="Buscar"
+            (click)="onSearchKey()"
+          >
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </div>
+  </nav>
+</section>

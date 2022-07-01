@@ -1,0 +1,174 @@
+<section
+  class="busqueda mb-5"
+  [ngClass]="{ 'no-resultados': resultados.length === 0 }"
+>
+  <div class="row mt-3 mt-md-5">
+    <div class="col-md-2"></div>
+    <div class="col-12 col-md-8 justify-content-center">
+      <h1 *ngIf="resultados.length > 0">
+        Resultados de la búsqueda: <strong>{{ busqueda }}</strong>
+      </h1>
+
+      <div class="alert alert-light text-center" *ngIf="loading">
+        <p class="d-flex justify-content-center">
+          <mat-spinner diameter="80"></mat-spinner>
+        </p>
+      </div>
+
+      <div class="text-center">
+        <h1 *ngIf="resultados.length === 0 && !loading">
+          <span class="sorry-line">¡Lo sentimos!</span><br />No se encontraron
+          resultados con
+          <strong>"{{ busqueda }}"</strong>
+        </h1>
+      </div>
+      <div class="row equal">
+        <div
+          class="col-12 col-md-3 mt-4 mt-md-3"
+          *ngFor="let resultado of resultados"
+        >
+          <!-- Tarjeta para Agenda Starts -->
+          <mat-card
+            class="card h-100 pointer"
+            [routerLink]="['/agenda/evento', resultado.idRegistro]"
+            *ngIf="resultado.categoria === 'Agenda'"
+          >
+            <div class="img-container my-2 mx-0">
+              <img
+                mat-card-image
+                [src]="resultado.uri"
+                [alt]="resultado.texto1"
+              />
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ resultado.texto1 }}</mat-card-title>
+              <mat-card-subtitle>
+                <span class="badge badge-pill badge-success">
+                  {{ resultado.categoria }}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              Por {{ resultado.texto2 }}
+              <p>{{ resultado.texto3 }}</p>
+              <p>{{ resultado.texto4 }}</p>
+            </mat-card-content>
+          </mat-card>
+          <!-- Tarjeta para Agenda Ends -->
+
+          <!-- Tarjeta para Normateca Starts -->
+          <mat-card
+            class="card h-100"
+            *ngIf="resultado.categoria === 'Normateca'"
+          >
+            <mat-card-header>
+              <mat-card-title>{{ resultado.texto1 }}</mat-card-title>
+              <mat-card-subtitle>
+                <span class="badge badge-pill badge-success">
+                  {{ resultado.categoria }}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <a
+                [href]="resultado.texto2"
+                target="blank"
+                mat-button
+                class="btn-blue-cat btn-block"
+                >Descargar</a
+              >
+            </mat-card-actions>
+          </mat-card>
+          <!-- Tarjeta para Normateca Ends -->
+
+          <!-- Tarjeta para Prensa Starts -->
+          <mat-card
+            class="card h-100 pointer"
+            [routerLink]="['/noticias/noticia', resultado.idRegistro]"
+            *ngIf="resultado.categoria === 'Prensa'"
+          >
+            <div class="img-container my-2 mx-0">
+              <img
+                mat-card-image
+                [src]="resultado.uri"
+                [alt]="resultado.texto1"
+              />
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ resultado.texto1 }}</mat-card-title>
+              <mat-card-subtitle>
+                <span class="badge badge-pill badge-success">
+                  {{ resultado.categoria }}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              {{ resultado.texto2 }}
+            </mat-card-content>
+          </mat-card>
+          <!-- Tarjeta para Prensa Ends -->
+
+          <!-- Tarjeta para Socio Starts -->
+          <mat-card
+            class="card h-100 pointer"
+            [routerLink]="[
+              '/contratar-arquitecto/arquitecto/',
+              resultado.idRegistro
+            ]"
+            *ngIf="resultado.categoria === 'Socio'"
+          >
+            <div class="img-container my-2 mx-0">
+              <img
+                mat-card-image
+                [src]="resultado.uri"
+                [alt]="resultado.texto1"
+              />
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ resultado.texto1 }}</mat-card-title>
+              <mat-card-subtitle>
+                <span class="badge badge-pill badge-success">
+                  {{ resultado.categoria }}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ resultado.texto3 }}</p>
+              <p>{{ resultado.texto4 }}</p>
+            </mat-card-content>
+          </mat-card>
+          <!-- Tarjeta para Socio Ends -->
+
+          <!-- Tarjeta para Proyecto Starts -->
+          <mat-card
+            class="card h-100 pointer"
+            [routerLink]="[resultado.webAPIUri]"
+            *ngIf="resultado.categoria === 'Proyecto'"
+          >
+            <div class="img-container my-2 mx-0">
+              <img
+                mat-card-image
+                [src]="resultado.uri"
+                [alt]="resultado.texto1"
+              />
+            </div>
+            <mat-card-header>
+              <mat-card-title>{{ resultado.texto1 }}</mat-card-title>
+              <mat-card-subtitle>
+                <span class="badge badge-pill badge-success">
+                  {{ resultado.categoria }}
+                </span>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              Por {{ resultado.texto3 }}
+              <p>Resumen: {{ resultado.texto2 }}</p>
+            </mat-card-content>
+          </mat-card>
+          <!-- Tarjeta para Proyecto Ends -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 col-0"></div>
+  </div>
+</section>

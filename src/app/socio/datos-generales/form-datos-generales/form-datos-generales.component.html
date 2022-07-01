@@ -1,0 +1,251 @@
+<section class="mt-3">
+  <form #socioForm="ngForm" (ngSubmit)="saveSocio(socioForm)" *ngIf="!loading">
+    <div class="form-body">
+      <div class="row">
+        <mat-form-field class="col-12 col-md-3">
+          <mat-label>Número de Colegiado</mat-label>
+          <input matInput disabled value="{{ socio?.codigo }}" />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-3">
+          <mat-label>Registro DRO</mat-label>
+          <input matInput value="{{ socio?.dro }}" />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-3">
+          <mat-label>Registro CDA</mat-label>
+          <input matInput disabled value="{{ socio?.cda }}" />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-3">
+          <mat-label>Registro CDU</mat-label>
+          <input matInput disabled value="{{ socio?.cda }}">
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Nombre</mat-label>
+          <input
+            matInput
+            #nombre="ngModel"
+            name="nombre"
+            [(ngModel)]="socio.nombreCompleto"
+            placeholder="Nombre(s)"
+            [disabled]="socio.idSocio > 0"
+            required
+          />
+          <mat-error *ngIf="nombre.invalid && nombre.touched"
+            >*Campo requerido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Apellido Paterno</mat-label>
+          <input
+            matInput
+            #aPaterno="ngModel"
+            name="aPaternoUsuario"
+            [(ngModel)]="socio.apellidoPat"
+            placeholder="Apellido Paterno"
+            [disabled]="socio.idSocio > 0"
+            required
+          />
+          <mat-error *ngIf="aPaterno.invalid && aPaterno.touched"
+            >*Campo requerido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Apellido Materno</mat-label>
+          <input
+            matInput
+            name="aMaternoUsuario"
+            [(ngModel)]="socio.apellidoMat"
+            [disabled]="socio.idSocio > 0"
+            placeholder="Apellido Materno"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Correo electrónico</mat-label>
+          <input
+            matInput
+            #email="ngModel"
+            name="email"
+            [(ngModel)]="socio.correoElectronico"
+            placeholder="example@example.com"
+            required
+          />
+          <mat-error *ngIf="email.invalid && email.touched"
+            >*Campo requerido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Teléfono Fijo</mat-label>
+          <input
+            matInput
+            type="tel"
+            name="telefonoFijo"
+            [(ngModel)]="socio.telefonoFijo"
+            maxlength="10"
+            (keypress)="validaNumeros($event)"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-4">
+          <mat-label>Teléfono móvil</mat-label>
+          <input
+            matInput
+            type="tel"
+            name="telefonoMovil"
+            [(ngModel)]="socio.telefonoMovil"
+            maxlength="10"
+            (keypress)="validaNumeros($event)"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-12 col-md-6 col-lg-4">
+          <mat-label>Grado o título</mat-label>
+          <input
+            matInput
+            name="titulo"
+            [(ngModel)]="socio.titulo"
+            placeholder="Ej. Ingeniero Arquitecto"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6 col-lg-3">
+          <mat-label>Nickname</mat-label>
+          <input
+            matInput
+            name="nickname"
+            [(ngModel)]="socio.nickName"
+            placeholder="Sobrenombre o apodo"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6 col-lg-3">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerFNacimiento"
+            #fNacimiento="ngModel"
+            name="fechaNacimiento"
+            [(ngModel)]="socio.fechaNacimiento"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerFNacimiento"
+          ></mat-datepicker-toggle>
+          <mat-datepicker touchUi #pickerFNacimiento></mat-datepicker>
+          <mat-error *ngIf="fNacimiento.invalid && fNacimiento.touched"
+            >*Campo requerido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6 col-lg-2">
+          <mat-label>Género</mat-label>
+          <mat-select
+            name="genero"
+            #genero="ngModel"
+            [(ngModel)]="socio.genero"
+            required
+          >
+            <mat-option value="H">Hombre</mat-option>
+            <mat-option value="M">Mujer</mat-option>
+            <mat-option value="O">Otro</mat-option>
+          </mat-select>
+          <mat-error *ngIf="genero.invalid && genero.touched"
+            >*Campo requerido</mat-error
+          >
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="col-12">
+          <mat-label>Currículum Vitae</mat-label>
+          <textarea
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="4"
+            matAutosizeMaxRows="8"
+            name="cv"
+            [(ngModel)]="socio.curriculumVitae"
+            placeholder="Ejemplo: Arquitecto con 10 años de experiencia, especializado en Urbanismo, etc."
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <img
+            src="{{ imgUri }}"
+            class="imgPerfil img-thumbnail"
+            *ngIf="!loadingImg"
+          />
+          <div class="d-flex justify-content-center" *ngIf="loadingImg">
+            <mat-spinner></mat-spinner>
+          </div>
+          <a
+            mat-raised-button
+            class="text-decoration-none w-100 mt-1 btn-upload-img"
+            color="primary"
+            (click)="fileInput.click()"
+          >
+            <!---<span> Seleccionar foto de perfil</span>--->
+            Seleccionar foto de perfil
+            <input
+              #fileInput
+              type="file"
+              (change)="onFileInput($event)"
+              style="display: none"
+            />
+          </a>
+          <a
+            mat-raised-button
+            class="text-decoration-none w-100 mt-1 btn-upload-img"
+            color="warn"
+          >
+            <!---<span> Seleccionar foto de perfil</span>--->
+            Eliminar foto de perfil
+          </a>
+        </div>
+        <div class="col-12 col-md-9 mt-0">
+          <mat-checkbox
+            class="mr-md-4"
+            name="mostrarTelefono"
+            [(ngModel)]="socio.mostrarTelefono"
+          >
+            Mostrar número de teléfono públicamente
+          </mat-checkbox>
+          <mat-checkbox name="mostrarEmail" [(ngModel)]="socio.mostrarCorreo">
+            Mostrar correo electrónico públicamente
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <div class="text-right">
+          <button mat-raised-button type="submit" class="btn-blue-cat mr-2">
+            Guardar
+          </button>
+          <!---<a mat-raised-button class="btn-gray-cat">Cancelar</a>--->
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!--Div a mostrar cuando estén cargando los datos-->
+  <div class="alert alert-light text-center" *ngIf="loading">
+    <p class="d-flex justify-content-center">
+      <mat-spinner></mat-spinner>
+    </p>
+  </div>
+</section>

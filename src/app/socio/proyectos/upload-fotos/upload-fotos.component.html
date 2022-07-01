@@ -1,0 +1,197 @@
+<!---Div a mostrar cuando se da clic en 'Agregar proyecto'--->
+<div *ngIf="data.idProyecto == null">
+  <div class="alert alert-info alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Sección deshabilitada</h4>
+    <p>
+      Es necesario que primero rellenes los Datos Generales. Posteriormente,
+      podrás subir tus fotografías al proyecto una vez ya registrado, dando clic
+      al botón <mat-icon>create</mat-icon> de la tabla principal.
+    </p>
+  </div>
+
+  <div class="row d-flex justify-content-end mt-1 mb-0">
+    <a
+      mat-raised-button
+      class="btn-gray-cat text-decoration-none"
+      (click)="closeDialog()"
+      >Aceptar</a
+    >
+  </div>
+</div>
+
+<!---Div a mostrar cuando se de clic en 'Editar proyecto'--->
+<div *ngIf="data.idProyecto != null">
+  <!----
+  <div class="row">
+    <h2 mat-dialog-title class="color-blue-cat">Subir fotografías</h2>
+  </div>
+  --->
+
+  <!---Div a mostrar cuando los archivos seleccionados sean más de 15-->
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    *ngIf="archivos.length > 10"
+  >
+    Sólo puedes subir 10 fotografías como máximo.
+  </div>
+
+  <!---Div a mostrar para hacer saber al usuario cuántas fotos puede subir y cuántas ya tiene cargadas-->
+  <div
+    class="alert alert-info alert-dismissible fade show"
+    role="alert"
+    *ngIf="fotosYaCargadas >= 1 && fotosYaCargadas < 10"
+  >
+    {{ textInfo }}
+  </div>
+
+  <!---Div a mostrar cuando el número de fotos ya cargadas sean igual a 15-->
+  <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+    *ngIf="fotosYaCargadas >= 10"
+  >
+    Has alcanzado el límite permitido para subir fotografías. Intenta eliminar
+    algunas de las fotografías que ya se encuentran cargadas para poder subir
+    nuevas fotografías.
+  </div>
+
+  <div
+    class="gallery-container mb-3"
+    *ngIf="!fotosLoading && fotosProyecto.length > 0"
+  >
+    <div
+      class="d-flex justify-content-center w-100 flex-wrap m-auto gallery-container"
+    >
+      <!--Muestra las 5 fotos debajo de la primer foto-->
+      <a
+        class="position-relative"
+        *ngFor="let foto of primerasCincoFotos; let i = index"
+        href="{{ foto?.foto }}"
+        data-fancybox="gallery"
+      >
+        <img
+          src="{{ foto?.foto }}"
+          class="img-fluid img-thumbnail img-gallery"
+          alt=""
+        />
+        <h2
+          class="d-flex align-items-center justify-content-center numberFotosRestantes"
+          *ngIf="i == 4 && ultimasFotos.length > 0"
+        >
+          +{{ ultimasFotos.length }}
+        </h2>
+      </a>
+
+      <!--Agrega las demás fotos en la galería, estas no se muestran al principio, solo se ven en la galería-->
+      <a
+        class="d-none"
+        *ngFor="let foto of ultimasFotos"
+        href="{{ foto?.foto }}"
+        data-fancybox="gallery"
+      >
+        <img
+          src="{{ foto?.foto }}"
+          class="img-fluid img-thumbnail img-gallery"
+          alt=""
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="fotosYaCargadas < 10">
+    <div class="col-md-12 text-center">
+      <div
+        appNgDropFiles
+        [ngClass]="{ 'file-over': estaSobreElemento }"
+        [archivos]="archivos"
+        (mouseSobre)="estaSobreElemento = $event"
+        class="well drop-zone d-none d-md-block"
+      >
+        <h4>Arrastra tus imágenes del proyecto aquí (máximo 10 fotografías)</h4>
+        <img src="assets/img/drop-images.png" />
+      </div>
+
+      <p class="d-none d-md-block">o</p>
+
+      <a
+        mat-raised-button
+        class="text-decoration-none"
+        color="accent"
+        (click)="fileInput.click()"
+      >
+        <span>Selecciona tus archivos</span>
+        <input
+          class="form-control"
+          #fileInput
+          type="file"
+          multiple="multiple"
+          accept=".png, .jpg, .jpeg"
+          (change)="onChangeFiles($event)"
+          style="display: none"
+        />
+      </a>
+    </div>
+  </div>
+
+  <div class="row mt-2" *ngIf="fotosYaCargadas < 10">
+    <div class="col-md-12">
+      <table class="table">
+        <thead class="bg-blue-cat">
+          <tr>
+            <td class="text-white">#</td>
+            <td class="text-white">Nombre archivo</td>
+            <td class="text-white">Tamaño</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let archivo of archivos; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td [ngClass]="{ 'text-green': archivo.progreso >= 100 }">
+              {{ archivo.nombreArchivo }}
+            </td>
+            <td *ngIf="archivo.archivo.size <= 1000000">
+              {{ archivo.archivo.size / 1024 | number: ".2-2" }} KB
+            </td>
+            <td *ngIf="archivo.archivo.size >= 1000000">
+              {{ archivo.archivo.size / 1024 / 1024 | number: ".2-2" }} MB
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-end mt-1 mb-0 buttons-actions">
+    <button
+      type="button"
+      class="mr-1 btn-upload"
+      mat-raised-button
+      color="primary"
+      [disabled]="
+        archivos.length == 0 ||
+        archivos.length > 10 ||
+        fotosYaCargadas == 10 ||
+        archivos.length > cantidadFotosDisponible
+      "
+      (click)="cargarImagenes()"
+    >
+      Cargar fotografías
+    </button>
+    <button
+      type="button"
+      class="mr-1"
+      mat-raised-button
+      color="warn"
+      (click)="limpiarArchivos()"
+    >
+      Limpiar
+    </button>
+    <a
+      mat-raised-button
+      class="btn-gray-cat text-decoration-none"
+      (click)="closeDialog()"
+      >Cancelar</a
+    >
+  </div>
+</div>

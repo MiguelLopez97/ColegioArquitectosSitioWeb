@@ -1,0 +1,52 @@
+<!---Button Subir archivo de certificación-->
+<div class="d-flex justify-content-end mt-3">
+  <button mat-fab color="accent" matTooltip="Subir archivo de certificación" matTooltipPosition="left" (click)="openDialogUploadCertificacion()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<!---Button Subir archivo de certificación-->
+
+<div class="row mt-3 mb-3" *ngIf="!loading">
+  <div class="col-12 col-md-4" *ngFor="let certificacion of certificaciones">
+    <mat-card class="h-100">
+      <h3 class="mat-h3 mb-0 color-blue-cat">{{certificacion.descripcion}}</h3>
+
+      <div class="d-flex justify-content-end">
+        <button mat-mini-fab color="primary" matTooltip="Ver archivo cargado" matTooltipPosition="above" (click)="openDialogViewCertificacion(certificacion.archivo, certificacion.archivoUri)">
+          <mat-icon>description</mat-icon>
+        </button>
+      </div>
+
+      <mat-card-content class="mat-typography">
+        <div class="row">
+          <div class="col-md-12">
+            <dt>Fecha de constancia:</dt> 
+            <dd>{{certificacion.fechaConstancia | date: 'longDate'}}</dd>
+          </div>
+          <div class="col-md-12">
+            <dt>Vigente desde:</dt> 
+            <dd>{{certificacion.vigenteDesde | date: 'longDate'}}</dd>
+          </div>
+          <div class="col-md-12">
+            <dt>Vigente hasta:</dt> 
+            <dd>{{certificacion.vigenteHasta | date: 'longDate'}}</dd>
+          </div>
+        </div>
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</div>
+
+<!--Div a mostrar cuando no haya datos-->
+<div class="alert alert-info text-center mt-1" *ngIf="!loading && certificaciones.length === 0">
+  <p><mat-icon class="icon-material">info</mat-icon></p>
+  <h4 class="alert-heading">No tienes certificaciones para mostrar</h4>
+</div>
+
+<!--Div a mostrar cuando estén cargando los datos-->
+<div class="alert alert-light text-center" *ngIf="loading">
+  <p class="d-flex justify-content-center">
+    <mat-spinner></mat-spinner>
+  </p>
+</div>
